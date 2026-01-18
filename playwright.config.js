@@ -24,7 +24,7 @@ export default defineConfig({
   /* Global teardown to run after all tests */
   globalTeardown: './global-teardown.js',
   /* Maximum time one test can run for (in milliseconds) */
-  timeout: 600000, // 600 seconds (10 minutes) - increased for complex test flows
+  timeout: 300000, // 300 seconds (5 minutes) - increased for complex test flows
   /* Maximum time expect() should wait for the condition to be met */
   expect: {
     timeout: 60000, // 60 seconds - increased for slower elements

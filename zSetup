@@ -87,26 +87,27 @@ All dependencies are installed automatically with `npm install`.
 ================================================================================
 
 3.1 Create the .env file:
-   - Copy the .env.example file and rename it to .env
-   - Or create a new file named .env in the project root
+   - Create a new file named .env in the project root
+   - (Note: The .env.example template file has been removed. See below for required variables.)
+
 
 3.2 Edit the .env file with your credentials:
    - Open .env in a text editor
-   - Fill in the required values for all environments you plan to use:
+   - Add the following variables (replace values as needed):
 
    # Test Environment Selection
    TEST_ENV=dkirc
 
    # DKIRC Environment
-   DKIRC_ENTERPRISE_LOGIN_URL=https://your-enterprise-url.com
-   DKIRC_ENTERPRISE_COMPANY_ID=10101015
-   DKIRC_ENTERPRISE_USERNAME=your-username
-   DKIRC_ENTERPRISE_PASSWORD=your-password
-   DKIRC_ADMIN_LOGIN_URL=https://your-admin-url.com
-   DKIRC_ADMIN_USERNAME=your-admin-username
-   DKIRC_ADMIN_PASSWORD=your-admin-password
+   DKIRC_ENTERPRISE_LOGIN_URL=
+   DKIRC_ENTERPRISE_COMPANY_ID=
+   DKIRC_ENTERPRISE_USERNAME=
+   DKIRC_ENTERPRISE_PASSWORD=
+   DKIRC_ADMIN_LOGIN_URL=
+   DKIRC_ADMIN_USERNAME=
+   DKIRC_ADMIN_PASSWORD=
 
-   # For other environments (stage, prod), fill similarly
+   # For other environments (stage, prod), add similar variables as above
 
 3.3 Save the .env file
 

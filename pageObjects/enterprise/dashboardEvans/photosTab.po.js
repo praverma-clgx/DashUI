@@ -299,13 +299,11 @@ class DashboardPhotosTabPage {
         buttonBox.y + buttonBox.height / 2
       );
       await this.page.mouse.down();
-      await this.page.waitForTimeout(50); // Small delay to simulate real click
       await this.page.mouse.up();
       await uploadButton.click({ force: true });
       console.log('Upload button clicked successfully (Playwright click + mouse events).');
     } catch (err) {
       console.error('Playwright click and mouse events failed, will try JS click:', err);
-      await this.page.screenshot({ path: 'upload_button_click_error.png' });
       // Only run JS fallback if Playwright click throws
       const jsClickResult = await this.page.evaluate((selector) => {
         const btn = document.querySelector(selector);

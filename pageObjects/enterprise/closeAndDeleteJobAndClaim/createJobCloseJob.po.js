@@ -184,7 +184,7 @@ export class CreateJobCloseJobPage {
       try {
         await selectAllCheckbox.waitFor({ state: 'visible', timeout: 5000 });
         if (await selectAllCheckbox.isEnabled()) {
-                await this.page.waitForLoadState('domcontentloaded'); 
+          await this.page.waitForLoadState('domcontentloaded');
           loaded = true;
           break;
         }

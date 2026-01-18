@@ -192,18 +192,22 @@ export class CreateClaimPage {
   async selectEstimator() {
     await this.estimatorInput.click();
     // Wait for dropdown to be visible
-    const dropdown = this.page.locator('#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown');
+    const dropdown = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown'
+    );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
     const adminOption = dropdown.locator('ul.rcbList > li').filter({ hasText: /^admin, admin$/i });
     await adminOption.first().click();
   }
-  
+
   // Select a coordinator in the internal participants grid (selects 'admin, admin' by text)
   async selectCoordinator() {
     await this.coordinatorInput.click();
     // Wait for dropdown to be visible
-    const dropdown = this.page.locator('#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown');
+    const dropdown = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown'
+    );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
     const adminOption = dropdown.locator('ul.rcbList > li').filter({ hasText: /^admin, admin$/i });
@@ -214,7 +218,9 @@ export class CreateClaimPage {
   async selectAccounting() {
     await this.accountingInput.click();
     // Wait for dropdown to be visible
-    const dropdown = this.page.locator('#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown');
+    const dropdown = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown'
+    );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
     const adminOption = dropdown.locator('ul.rcbList > li').filter({ hasText: /^admin, admin$/i });

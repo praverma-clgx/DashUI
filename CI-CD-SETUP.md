@@ -33,7 +33,6 @@ DKIRC_ADMIN_PASSWORD=...
 
 ## GitHub Actions Setup
 
-
 ## Environment Variables Setup
 
 ### Required Secrets/Variables
@@ -58,8 +57,10 @@ DKIRC_ADMIN_PASSWORD=...
 ```
 
 **How .env is loaded:**
+
 - The framework loads .env automatically in `global-setup.js` using `import 'dotenv/config'`.
 - You do NOT need to modify `playwright.config.js` for .env loading.
+
 1. Go to **Settings** → **Secrets and variables** → **Actions**
 2. Add all required secrets from the list above
 
@@ -68,8 +69,8 @@ DKIRC_ADMIN_PASSWORD=...
 - Go to **Actions** tab
 - Click on the workflow run
 - Download artifacts: `playwright-report` and `test-results` (HTML report, screenshots, logs)
-### View Results
 
+### View Results
 
 ### View Results
 
@@ -84,17 +85,18 @@ DKIRC_ADMIN_PASSWORD=...
 - Go to **Pipelines** → **Runs**
 - Click on the run
 - Download artifacts: `playwright-report`, `test-results`
+
 3. Push code to `main` or `develop` branch
 4. Pipeline will run automatically
 
 ### View Results
-
 
 ### Install Playwright browsers
 
 ```bash
 npx playwright install
 ```
+
 - Go to **CI/CD** → **Pipelines**
 - Click on the pipeline run
 - Download artifacts from the job
@@ -140,6 +142,7 @@ npx playwright test --trace=on --video=on
 ## Local Testing
 
 ### Install dependencies
+
 ```
 
 ### Install Playwright browsers
@@ -176,14 +179,14 @@ cp .env.example .env
 
 ### Run tests
 
-
 ### Authentication issues
 
 1. Verify credentials are correct in CI secrets
 2. Check `.auth` folder is excluded in `.gitignore`
 3. Ensure `global-setup.js` runs before tests (see Playwright config)
 4. Make sure `.env` is loaded via global-setup.js (not in playwright.config.js)
-```bash
+
+````bash
 # All tests
 npm test
 
@@ -199,7 +202,7 @@ npm run test:mixed
 # GitHub Actions: Already handled
 # GitLab CI: mcr.microsoft.com/playwright:v1.56.1-jammy
 # Azure DevOps: Add browser installation step (npx playwright install)
-```
+````
 
 # With UI
 
@@ -219,7 +222,8 @@ fullyParallel: true,               // Enable parallel execution
 ```
 
 **⚠️ Warning**: Parallel execution may cause flaky tests if tests share data or state.
-```
+
+````
 
 ## CI-Specific Commands
 
@@ -239,13 +243,13 @@ npm run test:ci
     - Rotate credentials regularly
 # Just install browsers
 npm run test:install
-```
-
+````
 
 5. **Monitor test duration**
-    - Current timeout: 10 minutes/test (see playwright.config.js)
-    - Adjust if tests consistently timeout
-    - Review slow tests in reports
+   - Current timeout: 5 minutes/test (see playwright.config.js)
+   - Adjust if tests consistently timeout
+   - Review slow tests in reports
+
 ## Reports & Artifacts
 
 ### Generated files:
