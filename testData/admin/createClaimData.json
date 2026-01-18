@@ -1,0 +1,15 @@
+{
+  "customer": {
+    "firstName": "Automate",
+    "lastName": "Admin",
+    "address": "123 Main St",
+    "zip": "90210",
+    "city": "Beverly Hills",
+    "country": "USA",
+    "state": "CA",
+    "mainPhone": "31055512340"
+  },
+  "lossInformation": {
+    "description": "Water Loss"
+  }
+}

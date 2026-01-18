@@ -1,0 +1,40 @@
+{
+  "name": "dashui",
+  "version": "1.0.0",
+  "description": "DashUI Framework - Playwright E2E Testing Suite for Admin and Enterprise Applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:enterprise": "playwright test --project=enterprise-chromium",
+    "test:admin": "playwright test --project=admin-chromium",
+    "test:mixed": "playwright test --project=mixed-chromium",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:ci": "playwright test --reporter=html,json,list",
+    "test:install": "playwright install --with-deps chromium",
+    "pretest:ci": "npm run test:install",
+    "verify-setup": "node scripts/verify-setup.js",
+    "setup": "npm install && npm run test:install && npm run verify-setup",
+    "cleanup": "node scripts/cleanup.js",
+    "cleanup:full": "npm run cleanup && playwright clean",
+    "cleanup:reports": "rimraf playwright-report test-results",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.1",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-playwright": "^2.5.0",
+    "glob": "^13.0.0",
+    "prettier": "^3.7.4"
+  }
+}

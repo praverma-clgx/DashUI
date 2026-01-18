@@ -1,0 +1,277 @@
+# Global Teardown - How It Works
+
+## 📋 Overview
+
+The global teardown system runs **automatically after ALL tests complete** to clean up sessions, authentication states, and generate summary reports.
+
+## 🔄 Execution Flow
+
+```
+┌─────────────────────────────────────────┐
+│  1. All Tests Complete                  │
+└───────────────┬─────────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────────┐
+│  2. Global Teardown Starts              │
+│     🧹 Teardown Started...              │
+└───────────────┬─────────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────────┐
+│  3. Logout from All Sessions            │
+│     🚪 Logging out...                   │
+│     ✓ Enterprise logout complete        │
+│     ✓ Admin logout complete             │
+└───────────────┬─────────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────────┐
+│  4. Clean Authentication States         │
+│     🔐 Cleaning auth states...          │
+│     ✓ Removed: enterprise.json          │
+│     ✓ Removed: admin.json               │
+└───────────────┬─────────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────────┐
+│  5. Generate Summary Report             │
+│     📊 Generating summary...            │
+│     ✓ Summary saved to:                 │
+│       test-results/teardown-summary.json│
+└───────────────┬─────────────────────────┘
+                │
+                ▼
+┌─────────────────────────────────────────┐
+│  6. Teardown Complete                   │
+│     ✅ Complete! (2.34s)                │
+└─────────────────────────────────────────┘
+```
+
+## 🎯 What Gets Cleaned
+
+### 1. **Active Sessions** 🚪
+
+- Opens headless browser with stored auth
+- Navigates to app and clicks logout button
+- Properly terminates both Admin and Enterprise sessions
+- **Why?** Prevents session conflicts in next test run
+
+### 2. **Authentication Files** 🔐
+
+- Deletes `.auth/enterprise.json`
+- Deletes `.auth/admin.json`
+- Keeps `.auth/` directory structure
+- **Why?** Forces fresh login on next run, prevents stale auth
+
+### 3. **Summary Report** 📊
+
+- Creates `test-results/teardown-summary.json`
+- Includes timestamp, environment, and actions taken
+- **Why?** Audit trail for CI/CD and debugging
+
+## 🚀 Usage
+
+### Automatic (Recommended)
+
+```bash
+# Teardown runs automatically after tests
+npm test
+```
+
+**Console Output:**
+
+```
+🧹 Global Teardown Started...
+
+🚪 Logging out from all sessions...
+   ✓ Enterprise logout complete
+   ✓ Admin logout complete
+🔐 Cleaning up authentication states...
+   ✓ Removed: enterprise.json
+   ✓ Removed: admin.json
+📊 Generating teardown summary...
+   ✓ Summary saved to: test-results/teardown-summary.json
+
+✅ Global Teardown Complete! (2.34s)
+```
+
+### Manual Cleanup (Anytime)
+
+```bash
+# Clean all test artifacts manually
+npm run cleanup
+```
+
+**What It Does:**
+
+- ✅ Cleans `.auth/` contents (keeps folder)
+- ✅ Removes `test-results/` completely
+- ✅ Removes `playwright-report/` completely
+- ✅ Removes `downloads/` completely
+
+```bash
+# Full cleanup (includes Playwright cache)
+npm run cleanup:full
+```
+
+```bash
+# Only remove reports (keep auth states)
+npm run cleanup:reports
+```
+
+## 📁 File Structure
+
+```
+DashUI_Framework/
+├── global-teardown.js           ← Main teardown logic
+├── playwright.config.js         ← References: globalTeardown: './global-teardown.js'
+├── scripts/
+│   └── cleanup.js              ← Manual cleanup utility
+├── .auth/                      ← Cleaned by teardown
+│   ├── admin.json              ← Removed
+│   └── enterprise.json         ← Removed
+└── test-results/
+    └── teardown-summary.json   ← Generated by teardown
+```
+
+## 🔧 Configuration
+
+### Enable/Disable Teardown
+
+**In `playwright.config.js`:**
+
+```javascript
+export default defineConfig({
+  globalSetup: './global-setup.js',
+  globalTeardown: './global-teardown.js', // ← Comment out to disable
+  // ...
+});
+```
+
+### Customize Behavior
+
+**In `global-teardown.js`:**
+
+```javascript
+// Skip logout (keep sessions active)
+async function logoutAllSessions() {
+  console.log('⏭ Skipping logout (sessions preserved)');
+  return;
+}
+
+// Keep auth states (don't delete)
+async function cleanupAuthStates() {
+  console.log('⏭ Skipping auth cleanup (states preserved)');
+  return;
+}
+```
+
+## 🎯 When Teardown Runs
+
+| Command                        | Teardown Runs?      |
+| ------------------------------ | ------------------- |
+| `npm test`                     | ✅ YES              |
+| `npm run test:admin`           | ✅ YES              |
+| `npm run test:enterprise`      | ✅ YES              |
+| `npm run test:ui`              | ✅ YES              |
+| `npm run test:headed`          | ✅ YES              |
+| `npx playwright test --headed` | ✅ YES              |
+| `npx playwright test --debug`  | ❌ NO (debug mode)  |
+| `npm run cleanup`              | ❌ NO (manual only) |
+
+## 🐛 Troubleshooting
+
+### Issue: "Teardown takes too long"
+
+**Solution:** Check network timeouts, sessions might be hanging
+
+```javascript
+// Reduce timeout in global-teardown.js
+await enterprisePage.goto(config.enterprise.baseUrl, { timeout: 5000 }); // Reduced from 10000
+```
+
+### Issue: "Auth files not deleted"
+
+**Solution:** File permissions issue
+
+```bash
+# Windows: Run as Administrator
+npm test
+
+# Check file permissions
+icacls .auth\enterprise.json
+```
+
+### Issue: "Sessions not logging out"
+
+**Solution:** Logout button locator changed
+
+```javascript
+// Update locators in respective page objects:
+// - EnterpriseHomePageLocators.logoutButton
+// - AdminHomePageLoc.LogoutBtn
+```
+
+### Issue: "Summary not generated"
+
+**Solution:** `test-results/` folder permissions
+
+```bash
+# Create folder manually
+mkdir test-results
+
+# Or clean and recreate
+npm run cleanup
+npm test
+```
+
+## 📊 Summary Report Format
+
+**File:** `test-results/teardown-summary.json`
+
+```json
+{
+  "teardownCompleted": "2026-01-13T10:30:45.123Z",
+  "environment": "dkirc",
+  "testSuite": "DashUI Framework",
+  "actions": {
+    "sessionsLoggedOut": true,
+    "authStatesRemoved": true,
+    "cleanupSuccessful": true
+  },
+  "timestamp": 1705145445123
+}
+```
+
+## 🎯 Best Practices
+
+1. ✅ **Always let teardown run** - Don't Ctrl+C during teardown
+2. ✅ **Check teardown logs** - Look for warnings about failed logouts
+3. ✅ **Use manual cleanup** - If you stop tests mid-run, use `npm run cleanup`
+4. ✅ **Monitor summary reports** - Track teardown success in CI/CD
+5. ⚠️ **Don't modify .auth files manually** - Let setup/teardown manage them
+
+## 🔄 Lifecycle Summary
+
+```
+npm test
+  │
+  ├─► Global Setup Runs (login, create .auth files)
+  ├─► Tests Execute (use .auth files)
+  └─► Global Teardown Runs (logout, delete .auth files)
+        ↓
+      Ready for next test run (clean state)
+```
+
+## 📞 Support
+
+- **Error during teardown?** Check console output for specific error
+- **Tests fail after teardown?** Run `npm run cleanup && npm test` to reset
+- **CI/CD integration?** Teardown runs automatically in pipelines
+
+---
+
+**Last Updated:** January 13, 2026  
+**Framework Version:** DashUI v1.0.0  
+**Playwright Version:** ^1.56.1

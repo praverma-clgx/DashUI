@@ -1,0 +1,443 @@
+
+================================================================================
+   DashUI PLAYWRIGHT TEST AUTOMATION FRAMEWORK - SETUP GUIDE
+================================================================================
+
+This guide will help you set up and run the DashUI Playwright test automation
+framework on a fresh machine. Follow each step carefully. This guide is up-to-date with the latest framework structure and best practices as of January 2026.
+
+================================================================================
+   STEP 0: DEPENDENCIES OVERVIEW
+================================================================================
+
+This framework requires the following dependencies (see package.json):
+
+- @playwright/test           # Playwright E2E test runner
+- dotenv                     # Loads environment variables from .env
+- prettier                   # Code formatter
+- eslint                     # Linting for code quality
+- eslint-config-prettier     # Prettier config for ESLint
+- eslint-plugin-import       # ESLint plugin for import rules
+- eslint-plugin-node         # ESLint plugin for Node.js rules
+- eslint-plugin-playwright   # Playwright best practices
+- glob                       # File pattern matching utility
+- @types/node                # TypeScript type definitions (dev only)
+
+All dependencies are installed automatically with `npm install`.
+- eslint-plugin-node         # ESLint plugin for Node.js rules
+- eslint-plugin-playwright   # ESLint plugin for Playwright best practices
+- glob                       # File pattern matching utility
+- @types/node                # TypeScript type definitions for Node.js (dev only)
+
+All dependencies are installed automatically with `npm install`.
+
+================================================================================
+  STEP 1: PREREQUISITES - SOFTWARE TO INSTALL
+================================================================================
+
+1.1 Node.js (Required)
+   - Download: https://nodejs.org/
+   - Version: LTS (Long Term Support) recommended
+   - Why: Required to run JavaScript/TypeScript and manage packages
+   - Installation:
+     * Download the Windows installer from the link above
+     * Run the installer and follow the wizard
+     * Accept default settings
+     * Verify installation:
+       Open Command Prompt or PowerShell and run:
+       > node --version
+       > npm --version
+
+1.2 Git (Optional but Recommended)
+   - Download: https://git-scm.com/downloads
+   - Why: For version control and pulling latest code changes
+   - Installation:
+     * Download the Windows installer
+     * Run installer with default settings
+     * Verify installation:
+       > git --version
+
+1.3 Visual Studio Code (Optional but Recommended)
+   - Download: https://code.visualstudio.com/
+   - Why: Best IDE for working with this framework
+   - Recommended Extensions:
+     * Playwright Test for VSCode
+     * Prettier - Code formatter
+     * ESLint
+
+1.4 Internet Connection
+   - Required for downloading dependencies and browser binaries
+
+================================================================================
+  STEP 2: GET THE PROJECT FILES
+================================================================================
+
+2.1 If using Git:
+   > git clone <repository-url>
+   > cd DashUI_FRAMEWORK
+
+2.2 If using a zip file:
+   - Extract the project folder to your desired location
+   - Open Command Prompt or PowerShell
+   - Navigate to the project folder:
+     > cd C:\path\to\DashUI_FRAMEWORK
+
+================================================================================
+  STEP 3: CONFIGURE ENVIRONMENT VARIABLES
+================================================================================
+
+3.1 Create the .env file:
+   - Copy the .env.example file and rename it to .env
+   - Or create a new file named .env in the project root
+
+3.2 Edit the .env file with your credentials:
+   - Open .env in a text editor
+   - Fill in the required values for all environments you plan to use:
+
+   # Test Environment Selection
+   TEST_ENV=dkirc
+
+   # DKIRC Environment
+   DKIRC_ENTERPRISE_LOGIN_URL=https://your-enterprise-url.com
+   DKIRC_ENTERPRISE_COMPANY_ID=10101015
+   DKIRC_ENTERPRISE_USERNAME=your-username
+   DKIRC_ENTERPRISE_PASSWORD=your-password
+   DKIRC_ADMIN_LOGIN_URL=https://your-admin-url.com
+   DKIRC_ADMIN_USERNAME=your-admin-username
+   DKIRC_ADMIN_PASSWORD=your-admin-password
+
+   # For other environments (stage, prod), fill similarly
+
+3.3 Save the .env file
+
+IMPORTANT: Never commit the .env file to version control as it contains sensitive credentials. The .gitignore file already excludes it.
+
+3.4 How .env is loaded:
+   - The framework loads .env automatically in `global-setup.js` using `import 'dotenv/config'`.
+   - You do NOT need to modify `playwright.config.js` for .env loading.
+   - All environment variables are available in tests, fixtures, and config after global setup.
+
+================================================================================
+  STEP 4: INSTALL PROJECT DEPENDENCIES
+================================================================================
+
+4.1 Open a terminal in the project root directory
+
+4.2 Install all Node.js dependencies:
+   > npm install
+
+   This will install:
+   - @playwright/test (test framework)
+   - dotenv (environment variable management)
+   - prettier (code formatting)
+   - eslint-config-prettier (formatting rules)
+   - Other dependencies listed in package.json
+
+   Wait for the installation to complete (may take 1-3 minutes)
+
+================================================================================
+  STEP 5: INSTALL PLAYWRIGHT BROWSERS
+================================================================================
+
+5.1 Install Playwright browsers (Chromium is default, but you can install all):
+   > npx playwright install
+
+   This downloads the browser binaries needed by Playwright (approx. 300-500 MB).
+
+5.2 Verify installation:
+   - Check that the installation completed without errors
+
+================================================================================
+  STEP 6: VERIFY FRAMEWORK STRUCTURE
+================================================================================
+
+Ensure your project has the following structure:
+
+DashUI_FRAMEWORK/
+├── .env                          # Your environment variables (created in Step 3)
+├── .env.example                  # Template for environment variables
+├── .prettierrc                   # Code formatting configuration
+├── package.json                  # Project dependencies
+├── playwright.config.js          # Playwright configuration
+├── global-setup.js               # Authentication setup
+├── global-teardown.js            # Cleanup after tests
+├── config/                       # Configuration files
+│   ├── browser.config.js
+│   └── environment.config.js
+├── fixtures/                     # Test fixtures
+│   ├── adminFixtures.js
+│   ├── enterpriseFixtures.js
+│   └── mixedFixtures.js
+├── pageObjects/                  # Page object models
+│   ├── admin/
+│   ├── enterprise/
+│   └── enterpriseAndAdmin/
+├── testData/                     # Test data files (JSON)
+│   ├── admin/
+│   └── enterprise/
+├── tests/                        # Test files
+│   ├── Admin/
+│   ├── Enterprise/
+│   └── EnterpriseAndAdmin/
+├── utils/                        # Utility functions                  
+
+================================================================================
+  STEP 7: RUN YOUR FIRST TEST
+================================================================================
+
+7.1 Run all tests:
+   > npm test
+
+7.2 Run specific project tests:
+   - Enterprise tests only:
+     > npm run test:enterprise
+   - Admin tests only:
+     > npm run test:admin
+   - Mixed tests only:
+     > npm run test:mixed
+
+7.3 Run tests in headed mode (see browser):
+   > npm run test:headed
+
+7.4 Run tests in UI mode (interactive):
+   > npm run test:ui
+
+7.5 Run a specific test file:
+   > npx playwright test tests/Enterprise/DashEnterprise/login_with_valid_credentials.spec.js
+
+7.6 Run with more parallelism (faster on multi-core machines):
+   > npx playwright test --workers=4
+
+7.7 Run with trace or video (for debugging):
+   > npx playwright test --trace=on --video=on
+
+================================================================================
+  STEP 8: VIEW TEST RESULTS & ARTIFACTS
+================================================================================
+
+8.1 After test execution:
+   - Test results are saved in the test-results/ folder
+   - HTML report is generated in playwright-report/ folder
+   - Screenshots (PNG) are saved for failed tests (see config)
+   - Videos and traces are saved if enabled in config or via CLI
+
+8.2 View HTML Report:
+   > npx playwright show-report
+
+   This opens the report in your default browser
+
+8.3 Report Structure:
+   - playwright-report/
+     └── report-<timestamp>/
+         └── index.html
+
+8.4 Debugging failed tests:
+   - Screenshots for failures are in test-results/
+   - If trace/video is enabled, open with:
+     > npx playwright show-trace <trace.zip>
+
+================================================================================
+  STEP 9: TROUBLESHOOTING
+================================================================================
+
+9.1 "Module not found" errors:
+   - Ensure you ran: npm install
+   - Delete node_modules folder and run npm install again
+
+9.2 "Browser not found" errors:
+   - Ensure you ran: npx playwright install chromium
+
+9.3 "url: expected string, got undefined" errors:
+   - Check your .env file has all required URLs
+   - Verify TEST_ENV is set correctly
+   - Ensure environment variable names match the pattern:
+     <ENV>_ENTERPRISE_LOGIN_URL, etc.
+
+9.4 Authentication failures:
+   - Verify credentials in .env file
+   - Check that login URLs are correct
+   - Ensure company ID is correct for enterprise tests
+
+9.5 Import errors:
+   - All imports should use .js extension
+   - Check file paths are correct (case-sensitive on some systems)
+
+9.6 Tests timing out:
+   - Check network connection
+   - Increase timeout in playwright.config.js if needed
+   - Verify application URLs are accessible
+
+9.7 Prettier/Formatting issues:
+   - Run: npm run format
+   - Or set up VS Code to format on save
+
+================================================================================
+  STEP 10: USEFUL COMMANDS
+================================================================================
+
+10.1 Package Management:
+   > npm install                    # Install dependencies
+   > npm update                     # Update dependencies
+   > npm install --save-dev <pkg>  # Add new dev dependency
+
+10.2 Testing:
+   > npm test                       # Run all tests
+   > npm run test:headed            # Run with browser visible
+   > npm run test:ui                # Run in UI mode
+   > npx playwright test --debug    # Run in debug mode
+   > npx playwright test --grep "test name"  # Run tests matching pattern
+
+10.3 Code Quality:
+   > npm run format                 # Format all code with Prettier
+
+10.4 Playwright:
+   > npx playwright show-report     # View last test report
+   > npx playwright codegen <url>   # Generate test code
+   > npx playwright test --list     # List all tests
+
+10.5 Cleanup:
+   - Delete test-results folder:
+     > rmdir /s /q test-results     (Windows)
+   - Delete playwright-report folder:
+     > rmdir /s /q playwright-report (Windows)
+
+================================================================================
+  STEP 11: FRAMEWORK FEATURES
+================================================================================
+
+11.1 Authentication:
+   - Global setup (`global-setup.js`) handles login and .env loading for all tests
+   - Credentials stored in .env file (never committed)
+   - Separate fixtures for admin, enterprise, and mixed tests (see fixtures/)
+
+11.2 Page Object Model:
+   - Organized by user type (admin/enterprise/enterpriseAndAdmin)
+   - Reusable methods for common actions
+   - Locators centralized in page objects (see pageObjects/)
+
+11.3 Test Data:
+   - JSON files in testData/ folder
+   - Dynamic data generation with utilities in utils/
+   - Shared data between tests
+
+11.4 Reporting & Artifacts:
+   - HTML reports with screenshots for failures
+   - JSON reports for CI/CD integration
+   - Timestamped reports for each run
+   - Screenshots, videos, and traces (if enabled) for debugging
+
+11.5 Configuration:
+   - Multiple environments (dkirc, stage, prod) via .env and config/environment.config.js
+   - Browser/device settings in config/browser.config.js
+   - Test timeouts, retries, and parallelism configurable in playwright.config.js
+
+================================================================================
+  STEP 12: BEST PRACTICES
+================================================================================
+
+12.1 Before Committing Code:
+   - Run: npm run format
+   - Ensure all tests pass
+   - Don't commit .env file
+
+12.2 Writing New Tests:
+   - Use page objects instead of direct selectors
+   - Follow existing test patterns
+   - Add descriptive test names
+   - Use test data from JSON files
+
+12.3 Maintaining Tests:
+   - Keep page objects updated
+   - Update selectors when UI changes
+   - Add new locators to page object files
+   - Document complex test flows
+
+12.4 Running on CI/CD:
+   - Use: npm run test:ci
+   - Ensure .env is configured on CI server
+   - Install browsers before running tests
+
+================================================================================
+  STEP 13: GETTING HELP
+================================================================================
+
+13.1 Documentation:
+   - Playwright Docs: https://playwright.dev/
+   - Node.js Docs: https://nodejs.org/docs/
+   - Dotenv Docs: https://github.com/motdotla/dotenv
+
+13.2 Common Issues:
+   - Check the TROUBLESHOOTING section above
+   - Review test execution logs
+   - Check browser console for errors
+
+13.3 Framework Questions:
+   - Review existing tests for examples
+   - Check page objects for available methods
+   - Review configuration files for settings
+
+================================================================================
+   STEP 14: DEBUGGING AND EXECUTION FLOW
+================================================================================
+
+14.1 How to Debug Tests:
+    - Run in debug mode:
+       > npx playwright test --debug
+       This opens the Playwright Inspector, allowing you to step through tests, set breakpoints, and view selectors.
+
+    - Run a single test in headed mode:
+       > npx playwright test <path-to-test-file> --headed
+       This shows the browser UI as tests run.
+
+    - Use console.log() in your test or page object files to print debug info.
+
+    - Use page.pause() in your test to pause execution and open the Inspector:
+       await page.pause();
+
+    - Use VS Code Playwright extension for interactive debugging and codegen.
+
+    - Enable trace/video for a run if needed:
+       > npx playwright test --trace=on --video=on
+
+14.2 What Happens When You Execute All Tests:
+    - Playwright loads configuration from playwright.config.js
+    - Global setup (global-setup.js) runs to authenticate and load .env
+    - All test files in the tests/ directory are discovered
+    - Tests are distributed to available workers (parallelized if configured)
+    - Each test runs in a fresh browser context (isolated session)
+    - Test results, screenshots, and traces are saved to test-results/ and playwright-report/
+    - Global teardown (if configured) runs to clean up sessions and files
+    - An HTML report is generated for review
+
+14.3 Common Debugging Tips:
+    - If a test fails, check the HTML report and test-results/ for screenshots and logs
+    - Use --grep to run only failing or specific tests
+    - Increase timeouts if tests are flaky due to network or slow UI
+    - Check .env and config files for correct URLs and credentials
+    - Use Playwright's trace viewer for step-by-step replay:
+       > npx playwright show-trace <trace.zip>
+
+================================================================================
+  QUICK START SUMMARY
+================================================================================
+
+For experienced users, here's a quick start:
+
+1. Install Node.js (https://nodejs.org/)
+2. Clone/extract project
+3. cd DashUI_FRAMEWORK
+4. Create .env file with credentials (copy from .env.example)
+5. npm install
+6. npx playwright install chromium
+7. npm test
+
+That's it! Your framework is ready to run.
+
+================================================================================
+  END OF SETUP GUIDE
+================================================================================
+
+Last Updated: January 13, 2026
+Framework Version: 1.0.0
+
+For additional help or questions, contact your test automation team.

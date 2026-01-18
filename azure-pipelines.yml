@@ -1,0 +1,55 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+  pr:
+    - main
+    - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
+
+  - script: npm ci
+    displayName: 'Install dependencies'
+
+  - script: npx playwright install --with-deps chromium
+    displayName: 'Install Playwright Browsers'
+
+  - script: |
+      echo "TEST_ENV=$(TEST_ENV)" >> .env
+      echo "DKIRC_ENTERPRISE_LOGIN_URL=$(DKIRC_ENTERPRISE_LOGIN_URL)" >> .env
+      echo "DKIRC_ENTERPRISE_COMPANY_ID=$(DKIRC_ENTERPRISE_COMPANY_ID)" >> .env
+      echo "DKIRC_ENTERPRISE_USERNAME=$(DKIRC_ENTERPRISE_USERNAME)" >> .env
+      echo "DKIRC_ENTERPRISE_PASSWORD=$(DKIRC_ENTERPRISE_PASSWORD)" >> .env
+      echo "DKIRC_ADMIN_LOGIN_URL=$(DKIRC_ADMIN_LOGIN_URL)" >> .env
+      echo "DKIRC_ADMIN_USERNAME=$(DKIRC_ADMIN_USERNAME)" >> .env
+      echo "DKIRC_ADMIN_PASSWORD=$(DKIRC_ADMIN_PASSWORD)" >> .env
+    displayName: 'Create .env file'
+
+  - script: npm run test
+    displayName: 'Run Playwright tests'
+    env:
+      CI: true
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results/*.json'
+      failTaskOnFailedTests: true
+    condition: always()
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Playwright Report'
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+      publishLocation: 'pipeline'
+    condition: always()

@@ -1,0 +1,11 @@
+{
+  "employee": {
+    "lastName": "Doe",
+    "address": {
+      "state": "South Carolina",
+      "street": "Fort Mill",
+      "city": "Fort Mill",
+      "zip": "29715"
+    }
+  }
+}
