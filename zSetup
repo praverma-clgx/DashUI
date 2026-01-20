@@ -88,7 +88,7 @@ All dependencies are installed automatically with `npm install`.
 
 3.1 Create the .env file:
    - Create a new file named .env in the project root
-   - (Note: The .env.example template file has been removed. See below for required variables.)
+   - Create a new file named .env in the project root (see below for required variables)
 
 
 3.2 Edit the .env file with your credentials:
@@ -156,7 +156,6 @@ Ensure your project has the following structure:
 
 DashUI_FRAMEWORK/
 ├── .env                          # Your environment variables (created in Step 3)
-├── .env.example                  # Template for environment variables
 ├── .prettierrc                   # Code formatting configuration
 ├── package.json                  # Project dependencies
 ├── playwright.config.js          # Playwright configuration
@@ -180,7 +179,7 @@ DashUI_FRAMEWORK/
 │   ├── Admin/
 │   ├── Enterprise/
 │   └── EnterpriseAndAdmin/
-├── utils/                        # Utility functions                  
+├── utils/                        # Utility functions
 
 ================================================================================
   STEP 7: RUN YOUR FIRST TEST
