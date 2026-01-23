@@ -89,7 +89,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Pending Sales',
       'Pending Sales',
-      JobDashboardLocators.pendingSalesHeading
+      JobDashboardLocators.pendingSalesHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -102,7 +102,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Pre Production',
       'Pre Production',
-      JobDashboardLocators.preProductionHeading
+      JobDashboardLocators.preProductionHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -115,7 +115,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Work in Progress',
       'Work in Progress',
-      JobDashboardLocators.workInProgressHeading
+      JobDashboardLocators.workInProgressHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -146,7 +146,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Invoice Pending',
       'Invoice Pending',
-      JobDashboardLocators.invoicePendingHeading
+      JobDashboardLocators.invoicePendingHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -159,7 +159,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Accounts Receivable',
       'Accounts Receivable',
-      JobDashboardLocators.accountsReceivableHeading
+      JobDashboardLocators.accountsReceivableHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -172,7 +172,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Waiting for Final Closure',
       'Waiting for Final Closure',
-      JobDashboardLocators.waitingForFinalClosureHeading
+      JobDashboardLocators.waitingForFinalClosureHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');
@@ -195,7 +195,7 @@ class JobDashboardPage {
     await this.clickTileAndVerify(
       'Jobs Lacking Interaction',
       'Open Jobs Lacking Interaction',
-      JobDashboardLocators.jobsLackingInteractionHeading
+      JobDashboardLocators.jobsLackingInteractionHeading,
     );
     await this.page.goBack();
     await this.page.waitForLoadState('networkidle');

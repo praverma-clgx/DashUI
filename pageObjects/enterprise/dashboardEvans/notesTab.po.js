@@ -153,7 +153,7 @@ class DashboardNotesTabPage {
   // Verify Change Visibility button is visible
   async verifyChangeVisibilityButtonVisible() {
     const changeVisibilityButton = this.page.locator(
-      DashboardNotesTabLocators.changeVisibilityButton
+      DashboardNotesTabLocators.changeVisibilityButton,
     );
     await changeVisibilityButton.waitFor({ state: 'visible' });
     return changeVisibilityButton;
@@ -187,7 +187,7 @@ class DashboardNotesTabPage {
   // Verify Email Attachments header is visible
   async verifyEmailAttachmentsHeaderVisible() {
     const emailAttachmentsHeader = this.page.locator(
-      DashboardNotesTabLocators.emailAttachmentsHeader
+      DashboardNotesTabLocators.emailAttachmentsHeader,
     );
     await emailAttachmentsHeader.waitFor({ state: 'visible' });
     return emailAttachmentsHeader;
@@ -210,7 +210,7 @@ class DashboardNotesTabPage {
   // Verify Refresh Notes Grid button is visible
   async verifyRefreshNotesGridButtonVisible() {
     const refreshNotesGridButton = this.page.locator(
-      DashboardNotesTabLocators.refreshNotesGridButton
+      DashboardNotesTabLocators.refreshNotesGridButton,
     );
     await refreshNotesGridButton.waitFor({ state: 'visible' });
     return refreshNotesGridButton;
@@ -311,7 +311,7 @@ class DashboardNotesTabPage {
     await this.page.waitForLoadState('domcontentloaded');
 
     const changeVisibilityButton = this.page.locator(
-      DashboardNotesTabLocators.changeVisibilityButton
+      DashboardNotesTabLocators.changeVisibilityButton,
     );
     await changeVisibilityButton.waitFor({ state: 'visible', timeout: 10000 });
     await changeVisibilityButton.click({ force: true });
@@ -326,7 +326,7 @@ class DashboardNotesTabPage {
   async verifyVisibilityColumnFirstData(expectedVisibility = 'Private') {
     const visibilityColumnFirstData = this.page.locator(
       DashboardNotesTabLocators.visibilityColumnFirstData,
-      { hasText: expectedVisibility }
+      { hasText: expectedVisibility },
     );
     await visibilityColumnFirstData.waitFor({ state: 'visible' });
     return visibilityColumnFirstData;

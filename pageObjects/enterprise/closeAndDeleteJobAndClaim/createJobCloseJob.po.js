@@ -15,7 +15,7 @@ export class CreateJobCloseJobPage {
   // Enter Job Name
   async createUniqueJobName(name) {
     const jobName = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_JobNameRadTextBox'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_JobNameRadTextBox',
     );
     await expect(jobName).toBeVisible();
     await jobName.click();
@@ -25,7 +25,7 @@ export class CreateJobCloseJobPage {
   // Select Loss Category by name
   async selectLossCategory(category) {
     const lossCategoryArrow = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_Arrow'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_Arrow',
     );
     await lossCategoryArrow.click();
 
@@ -40,13 +40,13 @@ export class CreateJobCloseJobPage {
   // Select Loss Category - Random (Except First)
   async selectRandomLossCategoryExceptFirst() {
     const lossCategoryInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_Arrow'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_Arrow',
     );
     await lossCategoryInput.click();
 
     // Wait for dropdown to appear and options to load
     const options = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_DropDown .rcbItem'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_comboBox_LossCategory_DropDown .rcbItem',
     );
     await expect(options.nth(1)).toBeVisible({ timeout: 5000 }); // Ensure at least the second option is loaded
 
@@ -69,7 +69,7 @@ export class CreateJobCloseJobPage {
   // Select Customer and wait for data to load
   async selectCustomer(customerName, expectedFirstName, expectedLastName) {
     const customerInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_DropDown_Customer_Input'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_DropDown_Customer_Input',
     );
     await expect(customerInput).toBeEnabled();
     await customerInput.click();
@@ -79,7 +79,7 @@ export class CreateJobCloseJobPage {
 
     // Wait for dropdown to appear
     const dropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_DropDown_Customer_DropDown'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_DropDown_Customer_DropDown',
     );
     await expect(dropdown).toBeVisible({ timeout: 5000 });
 
@@ -88,10 +88,10 @@ export class CreateJobCloseJobPage {
 
     // Wait for customer data to load
     const customerFirstName = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_FirstName'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_FirstName',
     );
     const customerLastName = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LastName'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LastName',
     );
 
     await expect(customerFirstName).not.toHaveValue('First Name', { timeout: 10000 });
@@ -102,17 +102,17 @@ export class CreateJobCloseJobPage {
   // Check "Same as Customer" checkbox and verify job address
   async checkSameAsCustomerAddress(expectedFirstName, expectedLastName) {
     const sameAsCustomerCheckbox = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_SameIndividualAddress'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_SameIndividualAddress',
     );
     await expect(sameAsCustomerCheckbox).toBeVisible();
     await sameAsCustomerCheckbox.click();
 
     // Verify job address data populated
     const jobAddressFirstName = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_FirstNameLoss'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_FirstNameLoss',
     );
     const jobAddressLastName = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LastNameLoss'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LastNameLoss',
     );
 
     await expect(jobAddressFirstName).toHaveValue(expectedLastName);
@@ -122,7 +122,7 @@ export class CreateJobCloseJobPage {
   // Check Water Mitigation checkbox
   async checkWaterMitigation() {
     const waterMitigationCheckbox = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_RequiredServices_0'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_RequiredServices_0',
     );
     await expect(waterMitigationCheckbox).toBeVisible();
     await waterMitigationCheckbox.click();
@@ -131,7 +131,7 @@ export class CreateJobCloseJobPage {
   // Fill Loss Description
   async fillLossDescription(lossDescription) {
     const lossDescriptionInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LossDescription'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_LossDescription',
     );
     await expect(lossDescriptionInput).toBeVisible();
     await lossDescriptionInput.fill(lossDescription);
@@ -140,7 +140,7 @@ export class CreateJobCloseJobPage {
   // Save job and return job number
   async saveJobAndGetJobNumber() {
     const saveButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_Button_SaveAndGoToSlideBoardBottom_input'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_Button_SaveAndGoToSlideBoardBottom_input',
     );
     await expect(saveButton).toBeVisible();
     await saveButton.click();
@@ -165,7 +165,7 @@ export class CreateJobCloseJobPage {
   // click on saveAndGotoSlideBoard
   async clickSaveBtnAndGoToSlideBoard() {
     const saveButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_Button_SaveAndGoToSlideBoardBottom_input'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_Button_SaveAndGoToSlideBoardBottom_input',
     );
     await expect(saveButton).toBeVisible();
     await saveButton.click();
@@ -177,7 +177,7 @@ export class CreateJobCloseJobPage {
   async rejectAllComplianceTasks() {
     // Select All checkbox with robust retry for slow/flaky loading
     const selectAllCheckbox = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ComplianceManagerGridView_ctl00_ctl02_ctl02_SelectColumnSelectCheckBox'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ComplianceManagerGridView_ctl00_ctl02_ctl02_SelectColumnSelectCheckBox',
     );
     let loaded = false;
     for (let i = 0; i < 10; i++) {
@@ -199,12 +199,12 @@ export class CreateJobCloseJobPage {
 
     // Select random reject reason
     const rejectReasonDropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReviewStatusRadComboBox_Input'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReviewStatusRadComboBox_Input',
     );
     await rejectReasonDropdown.click();
 
     const rejectReasonOptions = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReviewStatusRadComboBox_DropDown .rcbList .rcbItem'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReviewStatusRadComboBox_DropDown .rcbList .rcbItem',
     );
     await expect(rejectReasonOptions.first()).toBeVisible();
 
@@ -214,13 +214,13 @@ export class CreateJobCloseJobPage {
 
     // Click Reject button
     const rejectButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReasonButton'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ReasonButton',
     );
     await rejectButton.click();
 
     // Wait for all rows to be removed
     const complianceTaskRows = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ComplianceManagerGridView_ctl00'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_ComplianceTasks_userControl_ComplianceManagerGridView_ctl00',
     );
     await expect(complianceTaskRows).toHaveCount(1, { timeout: 10000 });
   }
@@ -231,14 +231,14 @@ export class CreateJobCloseJobPage {
     await this.page.waitForLoadState('networkidle');
     const closeJobButton = this.page.locator(
       '#DivisionActionsPanel button.buttonCore.primaryButton.divisionButtonStyle',
-      { hasText: 'Close Job' }
+      { hasText: 'Close Job' },
     );
     await expect(closeJobButton).toBeVisible();
     await closeJobButton.click();
 
     // Wait for modal to appear
     const modalWrapper = this.page.locator(
-      '#RadWindowWrapper_ctl00_ContentPlaceHolder1_RadWindow_Common'
+      '#RadWindowWrapper_ctl00_ContentPlaceHolder1_RadWindow_Common',
     );
     await expect(modalWrapper).toBeVisible({ timeout: 20000 });
 
@@ -268,7 +268,7 @@ export class CreateJobCloseJobPage {
     await reasonDropdownArrow.click();
 
     const reasonOptions = modalFrame.locator(
-      '#ReasonForClosingRadComboBox_DropDown .rcbList .rcbItem'
+      '#ReasonForClosingRadComboBox_DropDown .rcbList .rcbItem',
     );
     await expect(reasonOptions.first()).toBeVisible({ timeout: 10000 });
     const reasonOptionCount = await reasonOptions.count();
@@ -277,7 +277,7 @@ export class CreateJobCloseJobPage {
 
     // Click Close Job button in modal
     const modalCloseButton = modalFrame.locator(
-      'input#CloseReopenButton.buttonCore.primaryButton[type="submit"][value="Close Job"]'
+      'input#CloseReopenButton.buttonCore.primaryButton[type="submit"][value="Close Job"]',
     );
     await expect(modalCloseButton).toBeVisible({ timeout: 10000 });
     await modalCloseButton.click();
@@ -291,7 +291,7 @@ export class CreateJobCloseJobPage {
     // Assert Reopen Job button is visible
     const reopenJobButton = this.page.locator(
       '#DivisionActionsPanel button.buttonCore.primaryButton.divisionButtonStyle',
-      { hasText: 'Reopen Job' }
+      { hasText: 'Reopen Job' },
     );
     await expect(reopenJobButton).toBeVisible();
 

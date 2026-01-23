@@ -11,13 +11,13 @@ test('Group Security Page', async ({ authenticatedPage }) => {
   // Verify User Group Access text is visible and has correct text
   await expect(await roleBasedSecurityPage.verifyUserGroupAccessText()).toBeVisible();
   await expect(await roleBasedSecurityPage.verifyUserGroupAccessText()).toHaveText(
-    'User Group Access'
+    'User Group Access',
   );
 
   // Verify Update button is disabled initially
   await expect(await roleBasedSecurityPage.verifyUpdateButton()).toHaveAttribute(
     'disabled',
-    'disabled'
+    'disabled',
   );
 
   // Verify Select Group dropdown is visible and enabled

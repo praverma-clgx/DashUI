@@ -34,7 +34,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
     modalIframe,
     programName,
     getRandomNumber(1, 9),
-    getRandomNumber(1, 9)
+    getRandomNumber(1, 9),
   );
 
   // Check allow program requirement checkbox
@@ -59,7 +59,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   // Get the first grid row
   const firstGridRow = page
     .locator(
-      '#ctl00_ContentPlaceHolder1_StandardProgramControl_GridView_UnPublishedPrograms_ctl00 > tbody > tr'
+      '#ctl00_ContentPlaceHolder1_StandardProgramControl_GridView_UnPublishedPrograms_ctl00 > tbody > tr',
     )
     .first();
 
@@ -77,19 +77,19 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   await standardProgramWithActionsPage.fillRequirementDetails(
     addRequirementModalIframe,
     requirementName,
-    timeFrame
+    timeFrame,
   );
 
   // Select requirement type
   await standardProgramWithActionsPage.selectRequirementType(
     addRequirementModalIframe,
-    'Initial Customer Contact'
+    'Initial Customer Contact',
   );
 
   // Select requirement category
   await standardProgramWithActionsPage.selectRequirementCategory(
     addRequirementModalIframe,
-    'Service Standards'
+    'Service Standards',
   );
 
   await standardProgramWithActionsPage.selectAllStatesForRequirement(addRequirementModalIframe);
@@ -113,7 +113,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   // Fill action item details
   await standardProgramWithActionsPage.fillActionItemDetails(
     addActionItemModalIframe,
-    actionItemName
+    actionItemName,
   );
 
   // Select random action trigger
@@ -128,7 +128,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   // Fill assignment delay
   await standardProgramWithActionsPage.fillAssignmentDelay(
     addActionItemModalIframe,
-    assignmentDelayDigit
+    assignmentDelayDigit,
   );
 
   // Select random assignment delay unit
@@ -137,7 +137,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   // Fill must complete within
   await standardProgramWithActionsPage.fillMustCompleteWithin(
     addActionItemModalIframe,
-    mustCompleteWithinDigit
+    mustCompleteWithinDigit,
   );
 
   // Select random must complete within unit
@@ -145,7 +145,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
 
   // Select Requirement Action Item States
   await standardProgramWithActionsPage.selectMarkCompletedRequiredCompletionAction(
-    addActionItemModalIframe
+    addActionItemModalIframe,
   );
 
   // Verify action item buttons

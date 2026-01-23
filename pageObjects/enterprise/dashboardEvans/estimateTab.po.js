@@ -59,7 +59,7 @@ class DashboardEstimateTabPage {
   async verifyEstimateNumberColumnHeaderVisible() {
     const estimateNumberColumnHeader = this.page.locator(
       DashboardEstimateTabLocators.estimateNumberColumnHeader,
-      { hasText: 'Estimate Number' }
+      { hasText: 'Estimate Number' },
     );
     await estimateNumberColumnHeader.waitFor({ state: 'visible' });
     return estimateNumberColumnHeader;
@@ -69,7 +69,7 @@ class DashboardEstimateTabPage {
   async verifyAddedByColumnHeaderVisible() {
     const addedByColumnHeader = this.page.locator(
       DashboardEstimateTabLocators.addedByColumnHeader,
-      { hasText: 'Added By' }
+      { hasText: 'Added By' },
     );
     await addedByColumnHeader.waitFor({ state: 'visible' });
     return addedByColumnHeader;

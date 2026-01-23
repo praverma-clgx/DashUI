@@ -60,7 +60,7 @@ class DashboardEquipmentTabPage {
   // Verify Export to Excel button is visible
   async verifyExportToExcelButtonVisible() {
     const exportToExcelButton = this.page.locator(
-      DashboardEquipmentTabLocators.exportToExcelButton
+      DashboardEquipmentTabLocators.exportToExcelButton,
     );
     await exportToExcelButton.waitFor({ state: 'visible' });
     return exportToExcelButton;
@@ -77,7 +77,7 @@ class DashboardEquipmentTabPage {
   async verifyEquipmentNameColumnHeaderVisible() {
     const equipmentNameColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.equipmentNameColumnHeader,
-      { hasText: 'Equipment Name' }
+      { hasText: 'Equipment Name' },
     );
     await equipmentNameColumnHeader.waitFor({ state: 'visible' });
     return equipmentNameColumnHeader;
@@ -87,7 +87,7 @@ class DashboardEquipmentTabPage {
   async verifyEquipmentTypeColumnHeaderVisible() {
     const equipmentTypeColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.equipmentTypeColumnHeader,
-      { hasText: 'Equipment Type' }
+      { hasText: 'Equipment Type' },
     );
     await equipmentTypeColumnHeader.waitFor({ state: 'visible' });
     return equipmentTypeColumnHeader;
@@ -97,7 +97,7 @@ class DashboardEquipmentTabPage {
   async verifyBarcodeTextColumnHeaderVisible() {
     const barcodeTextColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.barcodeTextColumnHeader,
-      { hasText: 'Barcode Text' }
+      { hasText: 'Barcode Text' },
     );
     await barcodeTextColumnHeader.waitFor({ state: 'visible' });
     return barcodeTextColumnHeader;
@@ -107,7 +107,7 @@ class DashboardEquipmentTabPage {
   async verifyStartDateColumnHeaderVisible() {
     const startDateColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.startDateColumnHeader,
-      { hasText: 'Start Date' }
+      { hasText: 'Start Date' },
     );
     await startDateColumnHeader.waitFor({ state: 'visible' });
     return startDateColumnHeader;
@@ -117,7 +117,7 @@ class DashboardEquipmentTabPage {
   async verifyEndDateColumnHeaderVisible() {
     const endDateColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.endDateColumnHeader,
-      { hasText: 'End Date' }
+      { hasText: 'End Date' },
     );
     await endDateColumnHeader.waitFor({ state: 'visible' });
     return endDateColumnHeader;
@@ -127,7 +127,7 @@ class DashboardEquipmentTabPage {
   async verifyDaysOnJobColumnHeaderVisible() {
     const daysOnJobColumnHeader = this.page.locator(
       DashboardEquipmentTabLocators.daysOnJobColumnHeader,
-      { hasText: 'Days on Job' }
+      { hasText: 'Days on Job' },
     );
     await daysOnJobColumnHeader.waitFor({ state: 'visible' });
     return daysOnJobColumnHeader;

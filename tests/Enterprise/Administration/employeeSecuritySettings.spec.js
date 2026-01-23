@@ -19,13 +19,13 @@ test('Verify Employee Group Security Settings Page', async ({ authenticatedPage 
 
   // Verify User Group Access text has correct content
   await expect(await employeeSecuritySettingsPage.verifyUserGroupAccessTextContent()).toHaveText(
-    'User Group Access'
+    'User Group Access',
   );
 
   // Verify Update button is disabled by default
   await expect(await employeeSecuritySettingsPage.verifyUpdateButtonDisabled()).toHaveAttribute(
     'disabled',
-    'disabled'
+    'disabled',
   );
 
   // Verify Select Group dropdown is visible

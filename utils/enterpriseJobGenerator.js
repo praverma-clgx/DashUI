@@ -21,7 +21,7 @@ export function saveJobNumber(jobNumber, customerName, filePath, jobName, additi
   };
   fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), 'utf-8');
   console.log(
-    `Job number saved to ${filePath}: ${jobNumber}, Customer: ${customerName}, Job Name: ${jobName}`
+    `Job number saved to ${filePath}: ${jobNumber}, Customer: ${customerName}, Job Name: ${jobName}`,
   );
 }
 

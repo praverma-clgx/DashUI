@@ -63,12 +63,12 @@ test('Invoices Tab Validation And Add New Data Validation', async ({ authenticat
 
   // Verify Invoice detail page Add New button is visible
   await expect(
-    await dashboardInvoicesTabPage.verifyInvoiceDetailAddNewButtonVisible()
+    await dashboardInvoicesTabPage.verifyInvoiceDetailAddNewButtonVisible(),
   ).toBeVisible();
 
   // Verify Invoice detail page Refresh button is visible
   await expect(
-    await dashboardInvoicesTabPage.verifyInvoiceDetailRefreshButtonVisible()
+    await dashboardInvoicesTabPage.verifyInvoiceDetailRefreshButtonVisible(),
   ).toBeVisible();
 
   // Verify Job Number column header is visible
@@ -85,7 +85,7 @@ test('Invoices Tab Validation And Add New Data Validation', async ({ authenticat
 
   // Invoice Memeo input field locator
   const invoiceMemoInput = page.locator(
-    '#ctl00_ContentPlaceHolder1_gvInvoices_ctl00_ctl02_ctl04_txtReceivableNotes'
+    '#ctl00_ContentPlaceHolder1_gvInvoices_ctl00_ctl02_ctl04_txtReceivableNotes',
   );
   await expect(invoiceMemoInput).toBeVisible();
 
@@ -98,7 +98,7 @@ test('Invoices Tab Validation And Add New Data Validation', async ({ authenticat
 
   // Enter Random Number in invoice Amount input field
   const invoiceAmountInput = page.locator(
-    '#ctl00_ContentPlaceHolder1_gvInvoices_ctl00_ctl02_ctl04_txtAmount'
+    '#ctl00_ContentPlaceHolder1_gvInvoices_ctl00_ctl02_ctl04_txtAmount',
   );
   await invoiceAmountInput.click();
   await invoiceAmountInput.fill(randomNumber.toString());
@@ -136,7 +136,7 @@ test('Invoices Tab Validation And Add New Data Validation', async ({ authenticat
 
   // Note input field locator for the newly added invoice
   const noteInput = page.locator(
-    '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Invoices_userControl_gvInvoices_ctl00_ctl02_ctl03_FilterTextBox_ReceivableNote'
+    '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Invoices_userControl_gvInvoices_ctl00_ctl02_ctl03_FilterTextBox_ReceivableNote',
   );
   await noteInput.waitFor({ state: 'visible' });
   await noteInput.click();
@@ -147,7 +147,7 @@ test('Invoices Tab Validation And Add New Data Validation', async ({ authenticat
   // Assert the count of invoice rows in the grid to be 1
   const invoiceRows = page.locator(
     '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Invoices_userControl_gvInvoices_GridData table.rgMasterTable > tbody > tr.rgRow, ' +
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Invoices_userControl_gvInvoices_GridData table.rgMasterTable > tbody > tr.rgAltRow'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Invoices_userControl_gvInvoices_GridData table.rgMasterTable > tbody > tr.rgAltRow',
   );
   await invoiceRows.first().waitFor({ state: 'visible', timeout: 5000 });
   await expect(invoiceRows).toHaveCount(1);

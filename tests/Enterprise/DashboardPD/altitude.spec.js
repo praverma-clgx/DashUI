@@ -19,7 +19,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
 
   // Altitude Heading Text locator
   const altitudeHeading = page.locator(
-    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_Label_Heading'
+    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_Label_Heading',
   );
 
   // Assert that Altitude Heading is visible and has correct text
@@ -34,7 +34,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
 
   // Employee: All Items Selected locator
   const employeeAllItemsSelected = page.locator(
-    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectedEmployeesDiv span.blueColor'
+    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectedEmployeesDiv span.blueColor',
   );
 
   // Verify Employee All Items Selected is visible
@@ -55,7 +55,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Open Jobs Label locator
   const openJobsLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Open Jobs' }
+    { hasText: 'Open Jobs' },
   );
 
   // Verify Open Jobs label is visible
@@ -64,7 +64,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Pending Sales Label locator
   const pendingSalesLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Pending Sales' }
+    { hasText: 'Pending Sales' },
   );
 
   // Verify Pending Sales label is visible
@@ -73,7 +73,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Pre Production Label locator
   const preProductionLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Pre Production' }
+    { hasText: 'Pre Production' },
   );
 
   // Verify Pre Production label is visible
@@ -82,7 +82,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Work In Progress Label locator
   const workInProgressLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Work In Progress' }
+    { hasText: 'Work In Progress' },
   );
 
   // Verify Work In Progress label is visible
@@ -99,7 +99,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Invoice Pending Label locator
   const invoicePendingLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Invoice Pending' }
+    { hasText: 'Invoice Pending' },
   );
 
   // Verify Invoice Pending label is visible
@@ -108,7 +108,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Accounts Receivable Label locator
   const accountsReceivableLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Accounts Receivable' }
+    { hasText: 'Accounts Receivable' },
   );
 
   // Verify Accounts Receivable label is visible
@@ -117,7 +117,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Waiting to Close Label locator
   const waitingToCloseLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Waiting to Close' }
+    { hasText: 'Waiting to Close' },
   );
 
   // Verify Waiting to Close label is visible
@@ -126,7 +126,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Gross Profit Label locator
   const grossProfitLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Gross Profit' }
+    { hasText: 'Gross Profit' },
   );
 
   // Verify Gross Profit label is visible
@@ -135,7 +135,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Jobs Lacking Interaction Label locator
   const jobsLackingInteractionLabel = page.locator(
     '#ctl00_ContentPlaceHolder1_JobStatusTabsDiv span.black_text_l8',
-    { hasText: 'Jobs Lacking Interaction' }
+    { hasText: 'Jobs Lacking Interaction' },
   );
 
   // Verify Jobs Lacking Interaction label is visible
@@ -143,7 +143,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
 
   // Employee: set button locator
   const employeeSetButton = page.locator(
-    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeesButton'
+    '#ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeesButton',
   );
 
   // Verify Employee set button is visible
@@ -155,13 +155,13 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   // Wait for the Select Employees modal to appear
   const selectEmployeesTitle = page.locator(
     '#RadWindowWrapper_ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeeRadWindow em',
-    { hasText: 'Select Employees' }
+    { hasText: 'Select Employees' },
   );
   await expect(selectEmployeesTitle).toBeVisible();
 
   // Wait for the Close button to be visible
   const closeButton = page.locator(
-    '#RadWindowWrapper_ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeeRadWindow a.rwCloseButton'
+    '#RadWindowWrapper_ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeeRadWindow a.rwCloseButton',
   );
   await expect(closeButton).toBeVisible();
 
@@ -172,7 +172,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
   await page.waitForLoadState('networkidle');
 
   const modalWrapper = page.locator(
-    '#RadWindowWrapper_ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeeRadWindow'
+    '#RadWindowWrapper_ctl00_ContentPlaceHolder1_AltitudeHeaderControl_SelectEmployeeRadWindow',
   );
   await expect(modalWrapper).toBeHidden();
 
@@ -186,7 +186,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
 
   // Time frame drop down locator
   const timeFrameDropdown = page.locator(
-    '#ctl00_ContentPlaceHolder1_AltitudeChartControl_TimeFrameRadComboBox_Input'
+    '#ctl00_ContentPlaceHolder1_AltitudeChartControl_TimeFrameRadComboBox_Input',
   );
 
   // Verify Time frame drop down is visible
@@ -197,7 +197,7 @@ test('Altitude Page', async ({ authenticatedPage }) => {
 
   // Locator for all dropdown options
   const dropdownOptions = page.locator(
-    '#ctl00_ContentPlaceHolder1_AltitudeChartControl_TimeFrameRadComboBox_DropDown .rcbList li'
+    '#ctl00_ContentPlaceHolder1_AltitudeChartControl_TimeFrameRadComboBox_DropDown .rcbList li',
   );
 
   // Assert all expected options are present and visible

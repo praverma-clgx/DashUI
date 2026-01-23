@@ -21,7 +21,7 @@ test('Documents Tab Validation', async ({ authenticatedPage }) => {
 
   // Verify Manage Job Documents button is visible
   await expect(
-    await dashboardDocumentsTabPage.verifyManageJobDocumentsButtonVisible()
+    await dashboardDocumentsTabPage.verifyManageJobDocumentsButtonVisible(),
   ).toBeVisible();
 
   // Click Create Category button
@@ -47,7 +47,7 @@ test('Documents Tab Validation', async ({ authenticatedPage }) => {
 
   // Verify Documents Categories Table header is visible
   await expect(
-    await dashboardDocumentsTabPage.verifyDocumentsCategoriesTableHeaderVisible()
+    await dashboardDocumentsTabPage.verifyDocumentsCategoriesTableHeaderVisible(),
   ).toBeVisible();
 
   // Verify Accounting album in Document Categories is visible
@@ -58,7 +58,7 @@ test('Documents Tab Validation', async ({ authenticatedPage }) => {
 
   // Verify Signed Change Orders album in Document Categories is visible
   await expect(
-    await dashboardDocumentsTabPage.verifySignedChangeOrdersAlbumVisible()
+    await dashboardDocumentsTabPage.verifySignedChangeOrdersAlbumVisible(),
   ).toBeVisible();
 
   // Click Upload Document button

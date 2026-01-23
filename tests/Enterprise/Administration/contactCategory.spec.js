@@ -11,7 +11,7 @@ test('Contact Category Page', async ({ authenticatedPage }) => {
   // Verify Contact Categories header is visible and has correct text
   await expect(await contactCategoryPage.verifyContactCategoryHeader()).toBeVisible();
   await expect(await contactCategoryPage.verifyContactCategoryHeader()).toHaveText(
-    'Contact Categories'
+    'Contact Categories',
   );
 
   // Verify Grid Refresh Button is visible

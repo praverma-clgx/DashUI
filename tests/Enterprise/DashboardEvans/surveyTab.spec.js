@@ -42,6 +42,6 @@ test('Survey Tab Validation', async ({ authenticatedPage }) => {
 
   // Validate Customer Service Survey Form title text is correct
   await expect(await surveyTabPage.verifyCustomerServiceSurveyFormTitle()).toHaveText(
-    'Customer Service Survey Form'
+    'Customer Service Survey Form',
   );
 });

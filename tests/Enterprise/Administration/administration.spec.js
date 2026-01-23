@@ -11,7 +11,7 @@ test('Verify Administration Page', async ({ authenticatedPage }) => {
   // Verify Individual Contact Document Section is visible and has correct text
   await expect(await administrationPage.verifyIndividualContactDocSection()).toBeVisible();
   await expect(await administrationPage.verifyIndividualContactDocSection()).toHaveText(
-    'Individual Contact Document Section'
+    'Individual Contact Document Section',
   );
 
   // Verify Contact Type Dropdown is visible
@@ -47,14 +47,14 @@ test('Verify Administration Page', async ({ authenticatedPage }) => {
   await expect(await administrationPage.verifyClientLackingInteractionInput()).toBeVisible();
   await expect(await administrationPage.verifyClientLackingInteractionInput()).toHaveAttribute(
     'type',
-    'text'
+    'text',
   );
 
   // Verify Fabric Job Due Date Interval input is visible and is text type
   await expect(await administrationPage.verifyFabricJobDueDateIntervalInput()).toBeVisible();
   await expect(await administrationPage.verifyFabricJobDueDateIntervalInput()).toHaveAttribute(
     'type',
-    'text'
+    'text',
   );
 
   // Verify Job Warranty input is visible and is text type

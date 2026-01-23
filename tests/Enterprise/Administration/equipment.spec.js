@@ -13,7 +13,7 @@ test('Verify Equipment Page', async ({ authenticatedPage }) => {
 
   // Verify Equipment Details header has correct text
   await expect(await equipmentPage.verifyEquipmentDetailsHeaderText()).toHaveText(
-    'Equipment Details'
+    'Equipment Details',
   );
 
   // Verify Add New Equipment button is visible

@@ -73,7 +73,7 @@ test('Add New Workflow validation', async ({ authenticatedPage }) => {
   // Fill workflow title and description
   await workFlowBuilderPage.fillWorkflowTitleAndDescription(
     addWorkModalFrame,
-    automatedWorkflowName
+    automatedWorkflowName,
   );
 
   // Select random action trigger

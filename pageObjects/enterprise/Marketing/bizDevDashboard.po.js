@@ -52,7 +52,9 @@ class BizDevDashboardPage {
     // Hover over the Marketing menu
     await this.page.locator(BizDevDashboardLocators.marketingTab).hover();
     // Wait for the Biz Dev Dashboard submenu item to be visible
-    await this.page.locator(BizDevDashboardLocators.bizDevDashboardSubTab).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page
+      .locator(BizDevDashboardLocators.bizDevDashboardSubTab)
+      .waitFor({ state: 'visible', timeout: 10000 });
     // Click on Biz Dev Dashboard
     await this.page.locator(BizDevDashboardLocators.bizDevDashboardSubTab).click();
     await this.page.waitForLoadState('networkidle');
@@ -67,7 +69,7 @@ class BizDevDashboardPage {
   async verifyDashboardLabelsVisible(labels) {
     for (const labelText of labels) {
       const labelLocator = this.page.locator(
-        `${BizDevDashboardLocators.dashboardLabel}:has-text('${labelText}')`
+        `${BizDevDashboardLocators.dashboardLabel}:has-text('${labelText}')`,
       );
       await labelLocator.waitFor({ state: 'visible', timeout: 5000 });
     }

@@ -90,7 +90,7 @@ test('Verify Add New and Disable Employee Functionality', async ({ authenticated
 
   // Verify success message
   const successMessage = await employeePage.verifySuccessMessage(
-    'Employee details updated successfully.'
+    'Employee details updated successfully.',
   );
   await expect(successMessage).toHaveText('Employee details updated successfully.');
 

@@ -7,13 +7,13 @@ export class ClaimCenterPage {
     this.claimCenterMenuItem = page.getByText('Claim Center', { exact: true });
     this.backToHomePageButton = page.locator('#ctl00_ContentPlaceHolder1_btnBackToHomepage');
     this.exportToExcelButton = page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_btnExportToExcel'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_btnExportToExcel',
     );
     this.exportToPdfButton = page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_btnExportToPdf'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_btnExportToPdf',
     );
     this.clearAllFiltersLabel = page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_lblClearAllFilter'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_lblClearAllFilter',
     );
     this.claimCenterGridHeaderLocator = page.locator('#grid .k-link');
   }

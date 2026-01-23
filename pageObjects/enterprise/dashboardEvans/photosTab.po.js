@@ -253,7 +253,7 @@ class DashboardPhotosTabPage {
         );
       },
       PhotosTabLocators.uploadButton,
-      { timeout: 15000 }
+      { timeout: 15000 },
     );
 
     // 3. Scroll the button into view in case it's offscreen
@@ -264,7 +264,7 @@ class DashboardPhotosTabPage {
     const isEnabled = await uploadButton.isEnabled();
     const isVisible = await uploadButton.isVisible();
     console.log(
-      `Before click: Upload button text: ${buttonText}, enabled: ${isEnabled}, visible: ${isVisible}`
+      `Before click: Upload button text: ${buttonText}, enabled: ${isEnabled}, visible: ${isVisible}`,
     );
 
     // 5. Check for overlays or blockers above the button
@@ -277,7 +277,7 @@ class DashboardPhotosTabPage {
           if (!el) return null;
           return el.outerHTML;
         },
-        { x: buttonBox.x + buttonBox.width / 2, y: buttonBox.y + buttonBox.height / 2 }
+        { x: buttonBox.x + buttonBox.width / 2, y: buttonBox.y + buttonBox.height / 2 },
       );
       console.log('Element at button center:', overlayElement);
     } else {
@@ -296,7 +296,7 @@ class DashboardPhotosTabPage {
       await uploadButton.hover();
       await this.page.mouse.move(
         buttonBox.x + buttonBox.width / 2,
-        buttonBox.y + buttonBox.height / 2
+        buttonBox.y + buttonBox.height / 2,
       );
       await this.page.mouse.down();
       await this.page.mouse.up();
@@ -616,7 +616,7 @@ class DashboardPhotosTabPage {
         return btn && !btn.disabled;
       },
       PhotosTabLocators.downloadPhotosButton,
-      { timeout: 15000 }
+      { timeout: 15000 },
     );
 
     const isEnabled = await downloadButton.isEnabled();
@@ -648,7 +648,7 @@ class DashboardPhotosTabPage {
     const guidPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.zip$/i;
     if (!guidPattern.test(fileName)) {
       throw new Error(
-        `Expected file name in GUID format with .zip extension, but got: "${fileName}"`
+        `Expected file name in GUID format with .zip extension, but got: "${fileName}"`,
       );
     }
 
@@ -672,7 +672,7 @@ class DashboardPhotosTabPage {
   // Click on Back To Slideboard button
   async clickBackToSlideboardButton() {
     const backToSlideboardButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_BackToSlideBoardButton'
+      '#ctl00_ContentPlaceHolder1_BackToSlideBoardButton',
     );
     await backToSlideboardButton.waitFor({ state: 'visible' });
     await backToSlideboardButton.click();
@@ -682,7 +682,7 @@ class DashboardPhotosTabPage {
   // Click On Refresh Photos Button on slideboard
   async clickRefreshPhotosButton() {
     const refreshPhotosButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Photos_userControl_ctl00_RefreshPhotoControlButton'
+      '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Photos_userControl_ctl00_RefreshPhotoControlButton',
     );
     await refreshPhotosButton.waitFor({ state: 'visible' });
     await refreshPhotosButton.click();

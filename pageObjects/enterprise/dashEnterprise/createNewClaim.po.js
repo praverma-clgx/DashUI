@@ -6,88 +6,88 @@ export class CreateClaimPage {
     this.page = page;
     this.createClaimLink = page.locator('#ctl00_divLastView > a:nth-child(1)');
     this.reportedByInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_Arrow'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_Arrow',
     );
     this.reportedByFirstOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown > div > ul > li:nth-child(1)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown > div > ul > li:nth-child(1)',
     );
     this.providerInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ProviderOffice_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ProviderOffice_Input',
     );
     this.providerFirstOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ProviderOffice_DropDown > div > ul > li:nth-child(1)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ProviderOffice_DropDown > div > ul > li:nth-child(1)',
     );
     this.clientInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Client_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Client_Input',
     );
     this.clientFifthOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Client_DropDown > div > ul > li:nth-child(5)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Client_DropDown > div > ul > li:nth-child(5)',
     );
     this.programInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Grid_JobInformation_ctl00_ctl04_DropDown_Program_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Grid_JobInformation_ctl00_ctl04_DropDown_Program_Input',
     );
     this.programFirstOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Grid_JobInformation_ctl00_ctl04_DropDown_Program_DropDown > div > ul > li:nth-child(1)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Grid_JobInformation_ctl00_ctl04_DropDown_Program_DropDown > div > ul > li:nth-child(1)',
     );
     this.customerArrow = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_Arrow'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_Arrow',
     );
     this.customerFirstName = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_FirstName'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_FirstName',
     );
     this.customerLastName = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_LastName'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_LastName',
     );
     this.sameAsCustomerCheckbox = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_CheckBox_SameIndividualAddress'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_CheckBox_SameIndividualAddress',
     );
     this.estimatorInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_Input',
     );
     this.estimatorOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)',
     );
     this.coordinatorInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_Input',
     );
     this.coordinatorOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)',
     );
     this.accountingInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_Input',
     );
     this.accountingOption = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown > div > ul > li:nth-child(3)',
     );
     this.dateOfLossPicker = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DatePicker_DateOffLoss_CalendarPopupButton'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DatePicker_DateOffLoss_CalendarPopupButton',
     );
     this.dateOfLossInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DatePicker_DateOffLoss_dateInput'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DatePicker_DateOffLoss_dateInput',
     );
     this.artRestorationCheckbox = page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_RequiredServices_0'
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_RequiredServices_0',
     );
     this.lossDescriptionInput = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_LossDescription'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_LossDescription',
     );
     this.saveButton = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Button_SaveAndGoToSlideBoardBottom'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_Button_SaveAndGoToSlideBoardBottom',
     );
     this.createClaimButton = page.locator(
-      "input[name='ctl00$ContentPlaceHolder1$ProviderCreateClaim$Button_CreateJob']"
+      "input[name='ctl00$ContentPlaceHolder1$ProviderCreateClaim$Button_CreateJob']",
     );
     this.jobInfoPanel = page.locator(
-      '#JobInfoPanel > tr > td:nth-child(2) > div:nth-child(1) > span:nth-child(1)'
+      '#JobInfoPanel > tr > td:nth-child(2) > div:nth-child(1) > span:nth-child(1)',
     );
     this.customerEmail = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Email'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Email',
     );
     this.customerPhone = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Phone'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Phone',
     );
     this.customerAddress = page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Address'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_TextBox_Address',
     );
   }
 
@@ -102,14 +102,14 @@ export class CreateClaimPage {
     await this.reportedByInput.click();
     // Wait for "Loading, Please wait" to disappear if present
     const loadingLocator = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown .rcbLoading'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown .rcbLoading',
     );
     if (await loadingLocator.isVisible({ timeout: 2000 }).catch(() => false)) {
       await expect(loadingLocator).toBeHidden({ timeout: 10000 });
     }
     // Wait for dropdown options to be visible
     const optionsLocator = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown ul.rcbList > li.rcbItem'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_ReportedBY_DropDown ul.rcbList > li.rcbItem',
     );
     await expect(optionsLocator.first()).toBeVisible({ timeout: 10000 });
     // Require at least 2 options to select from
@@ -148,13 +148,13 @@ export class CreateClaimPage {
 
     // Type the customer name sequentially
     const customerInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_Input'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_Input',
     );
     await this.typeSequentially(customerInput, firstName, 300);
 
     // Wait for dropdown to appear
     const dropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_DropDown'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_Customer_DropDown',
     );
     await expect(dropdown).toBeVisible({ timeout: 15000 });
 
@@ -193,7 +193,7 @@ export class CreateClaimPage {
     await this.estimatorInput.click();
     // Wait for dropdown to be visible
     const dropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl00_EstimatorComboBox_DropDown',
     );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
@@ -206,7 +206,7 @@ export class CreateClaimPage {
     await this.coordinatorInput.click();
     // Wait for dropdown to be visible
     const dropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl01_EstimatorComboBox_DropDown',
     );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
@@ -219,7 +219,7 @@ export class CreateClaimPage {
     await this.accountingInput.click();
     // Wait for dropdown to be visible
     const dropdown = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_InternalParticpantsControl_InternalParticipantsList_ctl04_EstimatorComboBox_DropDown',
     );
     await dropdown.waitFor({ state: 'visible', timeout: 5000 });
     // Find the <li> with exact text 'admin, admin' (case-insensitive, trimmed)
@@ -237,13 +237,13 @@ export class CreateClaimPage {
   // Select Loss Category - Random (Except First)
   async selectRandomLossCategoryExceptFirst() {
     const lossCategoryInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_LossCatgory_Arrow'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_LossCatgory_Arrow',
     );
     await lossCategoryInput.click();
 
     // Corrected dropdown ID and option locator
     const options = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_LossCatgory_DropDown ul.rcbList > li'
+      '#ctl00_ContentPlaceHolder1_ProviderCreateClaim_DropDown_LossCatgory_DropDown ul.rcbList > li',
     );
     await expect(options.nth(1)).toBeVisible({ timeout: 5000 });
 
@@ -342,7 +342,7 @@ export class CreateClaimPage {
     await this.selectCustomer(
       claimDetails.dropdownText,
       claimDetails.firstName,
-      claimDetails.lastName
+      claimDetails.lastName,
     );
     await this.checkSameAsIndividualAddress();
     await this.selectEstimator();
@@ -366,7 +366,7 @@ export class CreateClaimPage {
     await this.selectCustomer(
       claimDetails.dropdownText,
       claimDetails.firstName,
-      claimDetails.lastName
+      claimDetails.lastName,
     );
     await this.checkSameAsIndividualAddress();
     await this.selectEstimator();
