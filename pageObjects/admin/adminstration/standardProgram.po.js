@@ -155,7 +155,10 @@ class StandardProgramPage {
   }
 
   async selectWaterMitigation(modalIframe) {
-    const waterMitigationCheckbox = modalIframe.locator('#CheckBoxList_Divisions_19');
+    const waterMitigationCheckbox = modalIframe
+      .getByText('Water Mitigation', { exact: true })
+      .locator('.. >> input[type="checkbox"]')
+      .first();
     await expect(waterMitigationCheckbox).toBeVisible({ timeout: 10000 });
     await waterMitigationCheckbox.check();
   }
@@ -172,10 +175,16 @@ class StandardProgramPage {
     await residentialCheckbox.check();
   }
 
-  async selectAllStates(modalIframe) {
-    const editLink = modalIframe.locator(StandardProgramLocators.appliesToStateEditLink);
-    await expect(editLink).toBeVisible({ timeout: 10000 });
-    await editLink.click();
+  async selectAllStates(modalIframe, country = 'USA') {
+    // Find the row containing the country span and click its Edit button
+    const countryRow = modalIframe.locator('#RadGrid_States_ctl00 tr.rgRow', {
+      has: modalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
+    });
+    await expect(countryRow).toBeVisible({ timeout: 10000 });
+
+    const editButton = countryRow.locator('input[type="submit"][value="Edit"]');
+    await expect(editButton).toBeVisible({ timeout: 10000 });
+    await editButton.click();
 
     const selectStateModal = modalIframe.locator(StandardProgramLocators.selectStateModal);
     await expect(selectStateModal).toBeVisible({ timeout: 10000 });

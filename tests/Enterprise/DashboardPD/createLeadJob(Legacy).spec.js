@@ -15,5 +15,5 @@ test('Error Page Validation', async ({ authenticatedPage }) => {
   await createLeadJobPageInstance.assertAndClickSourceURLButton();
 
   // Assert Error Message On Navigation
-  await createLeadJobPageInstance.assertErrorMessageVisible();
+  await createLeadJobPageInstance.assertGenericErrorMessageVisible();
 });

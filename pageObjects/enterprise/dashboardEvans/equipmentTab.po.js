@@ -66,6 +66,14 @@ class DashboardEquipmentTabPage {
     return exportToExcelButton;
   }
 
+  // Click on Export to Excel button
+  async clickExportToExcelButton() {
+    const exportToExcelButton = this.page.locator(
+      DashboardEquipmentTabLocators.exportToExcelButton,
+    );
+    await exportToExcelButton.click();
+  }
+
   // Click on Export to Excel button and wait for download
   async clickExportToExcelAndAssertDownload() {
     const [download] = await Promise.all([
@@ -82,6 +90,12 @@ class DashboardEquipmentTabPage {
     const exportToPDFButton = this.page.locator(DashboardEquipmentTabLocators.exportToPDFButton);
     await exportToPDFButton.waitFor({ state: 'visible' });
     return exportToPDFButton;
+  }
+
+  // Click on Export to PDF button
+  async clickExportToPDFButton() {
+    const exportToPDFButton = this.page.locator(DashboardEquipmentTabLocators.exportToPDFButton);
+    await exportToPDFButton.click();
   }
 
   // Click on Export to PDF button and wait for download

@@ -27,13 +27,9 @@ test('Reports validation', async ({ authenticatedPage }) => {
   // Switch back to the original tab
   await page.bringToFront();
 
-  console.log('Current Url' + page.url());
-
   // Click on Job Status report Option and switch to new tab
   const jobStatusReportTab = await reportsPage.clickJobStatusReportOptionAndAssertUrl();
   const reportsPageJobStatusTab = new ReportsPage(jobStatusReportTab);
-
-  console.log('Current Url 1' + jobStatusReportTab.url());
 
   // Select Job from dropdown and Generate Report in new tab
   await reportsPageJobStatusTab.selectJobStatusReportJobAndGenerateReport();

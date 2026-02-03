@@ -33,7 +33,7 @@ test.describe('Job Received Report', () => {
       await startDateInput.click();
       await startDateInput.fill(data.startDate);
       await startDateInput.blur();
-      
+
       await endDateInput.click();
       await endDateInput.fill(data.endDate);
       await endDateInput.blur();

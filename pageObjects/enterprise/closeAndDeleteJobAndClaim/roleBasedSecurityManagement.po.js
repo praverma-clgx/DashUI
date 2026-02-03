@@ -7,6 +7,11 @@
  * @property {string} userGroupAccessText
  * @property {string} updateButton
  * @property {string} selectGroupDropdown
+ * @property {string} employeeGrid
+ * @property {string} employeeNameSearchInput
+ * @property {string} filterButton
+ * @property {string} filterMenu
+ * @property {string} dataRows
  */
 
 /** @type {RoleBasedSecurityManagementLocatorsType} */
@@ -19,8 +24,12 @@ const RoleBasedSecurityManagementLocators = {
   userGroupAccessText: '#ctl00_ContentPlaceHolder1_Label1',
   updateButton: '#ctl00_ContentPlaceHolder1_btnSave',
   selectGroupDropdown: '#ctl00_ContentPlaceHolder1_ddlUser',
+  employeeGrid: '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00',
   employeeNameSearchInput:
     '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00_ctl02_ctl03_FilterTextBox_FirstName',
+  filterButton: '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00_ctl02_ctl03_Filter_FirstName',
+  filterMenu: 'div.RadMenu[id*="gvEmolpyee_rfltMenu"]',
+  dataRows: '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00 tbody.rgData .rgRow',
 };
 
 class RoleBasedSecurityManagementPage {
@@ -86,6 +95,7 @@ class RoleBasedSecurityManagementPage {
   // Select an option from the Select Group dropdown by visible text
   async selectGroupOptionByText(visibleText) {
     const dropdown = this.page.locator(RoleBasedSecurityManagementLocators.selectGroupDropdown);
+    await dropdown.waitFor({ state: 'visible' });
     await dropdown.selectOption({ label: visibleText });
     await this.page.waitForLoadState('networkidle');
   }
@@ -93,13 +103,11 @@ class RoleBasedSecurityManagementPage {
   // Employee name search input in Group Security page
   async groupSecurityEmployeeNameSearchInput(name) {
     // Wait for the employee grid to be visible first
-    const grid = this.page.locator('#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00');
+    const grid = this.page.locator(RoleBasedSecurityManagementLocators.employeeGrid);
     await grid.waitFor({ state: 'visible', timeout: 15000 });
 
     // Use correct locator for the employee name filter textbox
-    const input = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00_ctl02_ctl03_FilterTextBox_FirstName',
-    );
+    const input = this.page.locator(RoleBasedSecurityManagementLocators.employeeNameSearchInput);
     await input.waitFor({ state: 'visible', timeout: 15000 });
     await input.click();
     await input.fill(name);
@@ -113,13 +121,11 @@ class RoleBasedSecurityManagementPage {
 
   async clickFilterButtonAndSelectContains() {
     // Use correct locator for the filter button
-    const filterButton = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00_ctl02_ctl03_Filter_FirstName',
-    );
+    const filterButton = this.page.locator(RoleBasedSecurityManagementLocators.filterButton);
     await filterButton.waitFor({ state: 'visible' });
     await filterButton.click();
     // Wait for the filter menu to appear
-    const filterMenu = this.page.locator('div.RadMenu[id*="gvEmolpyee_rfltMenu"]');
+    const filterMenu = this.page.locator(RoleBasedSecurityManagementLocators.filterMenu);
     await filterMenu.waitFor({ state: 'visible', timeout: 10000 });
     const containsOption = filterMenu.locator('a.rmLink span.rmText', { hasText: 'Contains' });
     await containsOption.waitFor({ state: 'visible', timeout: 10000 });
@@ -130,9 +136,7 @@ class RoleBasedSecurityManagementPage {
   // Assert that User row count is zero
   async assertUserRowCountIsZero() {
     // Only count data rows, not header/filter rows
-    const rows = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_gvEmolpyee_ctl00 tbody.rgData .rgRow',
-    );
+    const rows = this.page.locator(RoleBasedSecurityManagementLocators.dataRows);
     await this.page.waitForLoadState('networkidle');
     const rowCount = await rows.count();
     if (rowCount !== 0) {

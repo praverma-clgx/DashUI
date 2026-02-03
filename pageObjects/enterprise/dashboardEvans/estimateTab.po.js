@@ -55,6 +55,12 @@ class DashboardEstimateTabPage {
     return exportToExcelButton;
   }
 
+  // Click on Export to Excel button
+  async clickExportToExcelButton() {
+    const exportToExcelButton = this.page.locator(DashboardEstimateTabLocators.exportToExcelButton);
+    await exportToExcelButton.click();
+  }
+
   // Click on Export to Excel button and assert file download
   async clickExportToExcelAndAssertDownload() {
     const [download] = await Promise.all([

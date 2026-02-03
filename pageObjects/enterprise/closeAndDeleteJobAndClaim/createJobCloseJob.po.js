@@ -166,21 +166,29 @@ export class CreateJobCloseJobPage {
   // Policy information input
   async fillPolicyInformation(claimNumber, fileNumber, policyNumber, yearBuilt) {
     // Generate random values for policy information
-    claimNumber = claimNumber || getRandomNumber(1, 9999).toString();
+    claimNumber = claimNumber || getRandomNumber(1, 99999).toString();
     fileNumber = fileNumber || getRandomNumber(1, 9999).toString();
-    policyNumber = policyNumber || getRandomNumber(1, 9999).toString();
-    yearBuilt = yearBuilt || getRandomNumber(1900, 2025).toString();
+    policyNumber = policyNumber || getRandomNumber(1, 99999).toString();
+    // Use realistic year range (1950-current year instead of 1900-2025)
+    const currentYear = new Date().getFullYear();
+    yearBuilt = yearBuilt || getRandomNumber(1950, currentYear).toString();
 
     const claimNumberInput = this.page.locator(
       '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_ClaimNumber',
     );
     await expect(claimNumberInput).toBeVisible();
     await claimNumberInput.fill(claimNumber);
-    const fileNumberInput = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_ExternalFileNumber',
-    );
-    await expect(fileNumberInput).toBeEnabled();
-    await fileNumberInput.fill(fileNumber);
+
+    // // File Number field may not be present for all loss categories
+    // const fileNumberInput = this.page.locator(
+    //   '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_ExternalFileNumber',
+    // );
+    // const fileNumberCount = await fileNumberInput.count();
+    // if (fileNumberCount > 0) {
+    //   await expect(fileNumberInput).toBeVisible({ timeout: 10000 });
+    //   await expect(fileNumberInput).toBeEnabled();
+    //   await fileNumberInput.fill(fileNumber);
+    // }
 
     const policyNumberInput = this.page.locator(
       '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_PolicyNumber',
@@ -191,18 +199,24 @@ export class CreateJobCloseJobPage {
     const yearBuiltInput = this.page.locator(
       '#ctl00_ContentPlaceHolder1_JobParentInformation_TextBox_Year',
     );
-    await expect(yearBuiltInput).toBeEnabled();
+    await expect(yearBuiltInput).toBeVisible({ timeout: 10000 });
+    await expect(yearBuiltInput).toBeEnabled({ timeout: 10000 });
+    // Clear field first in case it has default text
+    await yearBuiltInput.clear();
     await yearBuiltInput.fill(yearBuilt);
+    // Verify the value was actually filled
+    await expect(yearBuiltInput).toHaveValue(yearBuilt, { timeout: 5000 });
 
     await this.selectLastMonthDateRangeAndFillPolicyDates();
   }
 
   // Check Water Mitigation checkbox
   async checkWaterMitigation() {
-    const waterMitigationCheckbox = this.page.locator(
-      '#ctl00_ContentPlaceHolder1_JobParentInformation_CheckBox_RequiredServices_0',
-    );
-    await expect(waterMitigationCheckbox).toBeVisible();
+    // Find checkbox by locating text "Mitigation-WTR" or "Water Mitigation" and getting the associated checkbox input
+    const waterMitigationCheckbox = this.page
+      .locator('text=/.*Mitigation.*WTR.*|.*Water.*Mitigation.*/i >> .. >> input[type="checkbox"]')
+      .first();
+    await expect(waterMitigationCheckbox).toBeVisible({ timeout: 10000 });
     await waterMitigationCheckbox.click();
   }
 

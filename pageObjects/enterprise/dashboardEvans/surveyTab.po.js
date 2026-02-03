@@ -21,6 +21,8 @@ const DashboardSurveyTabPageLocators = {
   averageScoreColumnHeader:
     '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Survey_userControl_SrveyDetails_Grid_GridHeader th a',
   customerServiceSurveyForm: '#ctl00_ContentPlaceHolder1_lbOpenJobs',
+  surveyDropdown:
+    '#ctl00_ContentPlaceHolder1_dockJobTabs_C_Survey_userControl_SrveyDetails_Grid_ctl00_ctl02_ctl00_SurveyDropdown',
 };
 
 class DashboardSurveyTabPage {
@@ -134,10 +136,24 @@ class DashboardSurveyTabPage {
   }
 
   /**
+   * Select a survey from dropdown
+   * @param {string} surveyName - Name of the survey to select
+   */
+  async selectSurvey(surveyName = 'Structure Job Survey') {
+    const surveyDropdown = this.page.locator(DashboardSurveyTabPageLocators.surveyDropdown);
+    await surveyDropdown.selectOption({ label: surveyName });
+    // Wait for grid to load after survey selection
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  /**
    * Download and assert Excel file
    * @returns {Promise<boolean>}
    */
   async downloadAndAssertExcel() {
+    // Ensure survey is selected first
+    await this.selectSurvey();
+
     const exportToExcelButton = this.page.locator(
       DashboardSurveyTabPageLocators.exportToExcelButton,
     );

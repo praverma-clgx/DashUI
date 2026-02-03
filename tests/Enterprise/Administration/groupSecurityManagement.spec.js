@@ -9,24 +9,22 @@ test('Group Security Page', async ({ authenticatedPage }) => {
   await roleBasedSecurityPage.navigateToGroupSecurity();
 
   // Verify User Group Access text is visible and has correct text
-  await expect(await roleBasedSecurityPage.verifyUserGroupAccessText()).toBeVisible();
-  await expect(await roleBasedSecurityPage.verifyUserGroupAccessText()).toHaveText(
-    'User Group Access',
-  );
+  const userGroupAccessText = await roleBasedSecurityPage.verifyUserGroupAccessText();
+  await expect(userGroupAccessText).toBeVisible();
+  await expect(userGroupAccessText).toHaveText('User Group Access');
 
   // Verify Update button is disabled initially
-  await expect(await roleBasedSecurityPage.verifyUpdateButton()).toHaveAttribute(
-    'disabled',
-    'disabled',
-  );
+  const updateButton = await roleBasedSecurityPage.verifyUpdateButton();
+  await expect(updateButton).toBeDisabled();
 
   // Verify Select Group dropdown is visible and enabled
-  await expect(await roleBasedSecurityPage.verifySelectGroupDropdown()).toBeVisible();
-  await expect(await roleBasedSecurityPage.verifySelectGroupDropdown()).toBeEnabled();
+  const selectGroupDropdown = await roleBasedSecurityPage.verifySelectGroupDropdown();
+  await expect(selectGroupDropdown).toBeVisible();
+  await expect(selectGroupDropdown).toBeEnabled();
 
-  // Select CEO option from the dropdown
-  await roleBasedSecurityPage.selectGroupOption('349');
+  // Select Estimator option from the dropdown by text
+  await roleBasedSecurityPage.selectGroupOptionByText('Estimator');
 
   // Verify Update button is enabled after selecting an option
-  await expect(await roleBasedSecurityPage.verifyUpdateButton()).toBeEnabled();
+  await expect(updateButton).toBeEnabled();
 });

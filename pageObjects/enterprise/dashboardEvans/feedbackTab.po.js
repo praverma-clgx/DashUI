@@ -19,6 +19,9 @@ class FeedbackTabPage {
       hasText: 'Feedback',
     });
     await expect(feedBackTabLocator).toBeVisible();
+
+    // Scroll tab into view to avoid navigation arrow overlap
+    await feedBackTabLocator.scrollIntoViewIfNeeded();
     await feedBackTabLocator.click();
     await this.page.waitForLoadState('domcontentloaded');
   }

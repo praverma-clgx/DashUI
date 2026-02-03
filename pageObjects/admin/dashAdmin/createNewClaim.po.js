@@ -1,8 +1,11 @@
 import { expect } from '@playwright/test';
 import { getRandomNumber } from '../../../utils/randomNumber.js';
 import standardProgramData from '../../../testData/admin/Adminstration/standardProgram.json' with { type: 'json' };
+import { config } from '../../../config/environment.config.js';
 
 const { standardProgram } = standardProgramData;
+const currentEnv = config.env || 'dkirc';
+const providerConfig = standardProgram[currentEnv] || standardProgram.dkirc;
 
 const CreateClaimLocators = {
   // Create Claim Button
@@ -215,7 +218,13 @@ class CreateClaimPage {
    * Select water mitigation division
    */
   async selectWaterMitigation() {
-    await this.page.locator(CreateClaimLocators.waterMitigationCheckbox).click();
+    // Find checkbox by locating exact text "Water Mitigation" and getting the associated checkbox input
+    const waterMitigationCheckbox = this.page
+      .getByText('Water Mitigation', { exact: true })
+      .locator('.. >> input[type="checkbox"]')
+      .first();
+    await expect(waterMitigationCheckbox).toBeVisible({ timeout: 10000 });
+    await waterMitigationCheckbox.click();
   }
 
   /**
@@ -258,10 +267,10 @@ class CreateClaimPage {
     await expect(dropdownList).toBeVisible({ timeout: 10000 });
     // Now type provider name
 
-    //  await providerInput.fill(standardProgram.providerName);
+    //  await providerInput.fill(providerConfig.providerName);
     await providerInput.click();
 
-    await this.typeSequentially(providerInput, standardProgram.providerName, 500);
+    await this.typeSequentially(providerInput, providerConfig.providerName, 500);
 
     // Wait for the second row ("-Unspecified-") to be loaded before typing
     const secondRow = dropdownList.locator('li.rcbItem').nth(1);
@@ -271,7 +280,7 @@ class CreateClaimPage {
     const providerOption = dropdownList
       .locator('li.rcbItem')
       .filter({
-        has: this.page.locator('td', { hasText: standardProgram.providerName }),
+        has: this.page.locator('td', { hasText: providerConfig.providerName }),
       })
       .first();
 

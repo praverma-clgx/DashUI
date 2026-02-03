@@ -312,7 +312,9 @@ class AcceptClaimCloseClaimPage {
     await environmentDropdownArrow.waitFor({ state: 'visible', timeout: 10000 });
     await environmentDropdownArrow.click();
 
-    const environmentDropdownList = editJobIFrame.locator('#comboBoxEnvironmentalCode_DropDown .rcbList');
+    const environmentDropdownList = editJobIFrame.locator(
+      '#comboBoxEnvironmentalCode_DropDown .rcbList',
+    );
     await environmentDropdownList.waitFor({ state: 'visible', timeout: 10000 });
 
     const secondOption = environmentDropdownList.locator('li.rcbItem').nth(1);

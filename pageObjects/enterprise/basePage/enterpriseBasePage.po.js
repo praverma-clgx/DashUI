@@ -1,3 +1,5 @@
+import { removeWalkMeOverlays } from '../../../utils/walkmeRemover.js';
+
 export class BasePage {
   /**
    * Helper to select an option from a dropdown by typing and clicking the option.
@@ -51,11 +53,36 @@ export class BasePage {
 
     // 3. Wait for page load
     await this.page.waitForLoadState('networkidle');
+
+    // 4. Auto-remove any WalkMe overlays that appeared after navigation
+    await removeWalkMeOverlays(this.page);
   }
 
   // Wait for page to be fully ready
   async waitForPageReady() {
     await this.page.waitForLoadState('networkidle');
     await this.page.waitForFunction(() => document.readyState === 'complete').catch(() => {});
+  }
+
+  /**
+   * Safe click with automatic WalkMe overlay removal
+   * @param {import('playwright').Locator} locator - The element to click
+   * @param {Object} options - Click options
+   */
+  async safeClick(locator, options = {}) {
+    await locator.click(options);
+
+    // Remove any WalkMe overlays after click
+    await removeWalkMeOverlays(this.page);
+
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  /**
+   * Manually remove all WalkMe overlays from the page
+   * @returns {Promise<void>}
+   */
+  async removeOverlays() {
+    await removeWalkMeOverlays(this.page);
   }
 }

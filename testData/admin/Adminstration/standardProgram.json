@@ -1,5 +1,19 @@
 {
   "standardProgram": {
-    "providerName": "Nextgear"
+    "dev": {
+      "providerName": "Nextgear"
+    },
+    "dkirc": {
+      "providerName": "Nextgear"
+    },
+    "stage": {
+      "providerName": "Nextgear"
+    },
+    "qa": {
+      "providerName": "Nextgear"
+    },
+    "prod": {
+      "providerName": "Support"
+    }
   }
 }

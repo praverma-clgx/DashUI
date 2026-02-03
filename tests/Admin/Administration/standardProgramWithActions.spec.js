@@ -3,8 +3,11 @@ import { getRandomNumber } from '../../../utils/randomNumber.js';
 import standardProgramData from '../../../testData/admin/Adminstration/standardProgram.json' with { type: 'json' };
 import StandardProgramPage from '../../../pageObjects/admin/adminstration/standardProgram.po.js';
 import StandardProgramWithActionsPage from '../../../pageObjects/admin/adminstration/standardProgramWithActions.po.js';
+import { config } from '../../../config/environment.config.js';
 
 const { standardProgram } = standardProgramData;
+const currentEnv = config.env || 'dkirc';
+const providerConfig = standardProgram[currentEnv] || standardProgram.dkirc;
 let programName = `Program${getRandomNumber(1, 100000)}`;
 let requirementName = `Requirement${getRandomNumber(1, 1000)}`;
 let timeFrame = `Time${getRandomNumber(1, 9)}`;
@@ -172,7 +175,7 @@ test('Add New Standard Programs With Actions', async ({ authenticatedPage }) => 
   await standardProgramPage.clickInviteesTab(publishModalIframe);
 
   // Search for provider
-  await standardProgramPage.searchProvider(publishModalIframe, standardProgram.providerName);
+  await standardProgramPage.searchProvider(publishModalIframe, providerConfig.providerName);
 
   // Select first provider
   await standardProgramPage.selectFirstProvider(publishModalIframe);

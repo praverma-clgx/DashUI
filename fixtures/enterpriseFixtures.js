@@ -1,11 +1,13 @@
 import { test as base } from '@playwright/test';
 import { config } from '../config/environment.config.js';
 import EnterpriseLoginPage from '../pageObjects/enterprise/loginPage/enterpriseLoginPage.po.js';
+import { setupWalkMeRemoval, setupNavigationWalkMeRemoval } from '../utils/walkmeRemover.js';
 
 /**
  * Custom fixture for Enterprise tests using storage state
  * Session is already authenticated via global setup
  * Automatically re-authenticates if session is invalid
+ * PARALLEL-SAFE: Each worker gets isolated notification handling
  */
 export const test = base.extend({
   authenticatedPage: async ({ page }, use) => {
@@ -33,6 +35,10 @@ export const test = base.extend({
       await page.context().storageState({ path: '.auth/enterprise.json' });
       console.log('✓ Re-authentication successful');
     }
+
+    // 🔧 Remove WalkMe overlays with continuous monitoring (handles dynamic overlays)
+    await setupWalkMeRemoval(page);
+    setupNavigationWalkMeRemoval(page);
 
     // Now page is authenticated and ready to use
     await use(page);
