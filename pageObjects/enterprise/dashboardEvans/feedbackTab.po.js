@@ -20,9 +20,8 @@ class FeedbackTabPage {
     });
     await expect(feedBackTabLocator).toBeVisible();
 
-    // Scroll tab into view to avoid navigation arrow overlap
-    await feedBackTabLocator.scrollIntoViewIfNeeded();
-    await feedBackTabLocator.click();
+    // Use JavaScript click to bypass pointer event interception
+    await feedBackTabLocator.evaluate((element) => element.click());
     await this.page.waitForLoadState('domcontentloaded');
   }
 

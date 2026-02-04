@@ -1,5 +1,8 @@
 import { test } from '../../../fixtures/enterpriseFixtures.js';
 import CreateLeadJobPage from '../../../pageObjects/enterprise/dashboardPD/createLeadJob(Legacy).po.js';
+import { isProduction } from '../../../utils/testTags.js';
+
+test.skip(isProduction(), 'Skipping create claim test in production environment');
 
 test('Error Page Validation', async ({ authenticatedPage }) => {
   const page = authenticatedPage;

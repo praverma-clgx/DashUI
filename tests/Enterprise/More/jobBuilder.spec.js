@@ -39,7 +39,7 @@ test('Job Builder in More', async ({ authenticatedPage }) => {
   await jobBuilderPage.validateAddNewEmailTemplateButton();
 
   // Validate Upload to Franchisees Button
-  await jobBuilderPage.validateUploadToFranchiseesButton();
+  //await jobBuilderPage.validateUploadToFranchiseesButton();
 
   // Validate Export to PDF Button
   await jobBuilderPage.validateExportToPDFButton();

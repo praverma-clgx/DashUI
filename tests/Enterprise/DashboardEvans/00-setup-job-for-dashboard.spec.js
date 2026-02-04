@@ -5,6 +5,9 @@ import { saveJobNumber } from '../../../utils/enterpriseJobGenerator.js';
 
 const { newJobData } = createJobData;
 
+// Configure this test file to run in serial mode - setup runs first before all other tests
+test.describe.configure({ mode: 'serial' });
+
 test('Setup - Create Job for DashboardEvans Tests', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const createJobPage = new CreateJobCloseJobPage(page);

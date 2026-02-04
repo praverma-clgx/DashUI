@@ -10,6 +10,9 @@ const { claimDetails: createNewClaimDetails } = claimDetails;
 // Skip this test in production environment
 test.skip(isProduction(), 'Skip in production');
 
+// Configure this test file to run in serial mode - setup runs first before all other tests
+test.describe.configure({ mode: 'serial' });
+
 // Setup test - Create a claim for dashboard tests
 test('Setup - Create Claim for Dashboard Tests', async ({ authenticatedPage }) => {
   const page = authenticatedPage;

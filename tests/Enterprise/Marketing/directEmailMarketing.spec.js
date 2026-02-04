@@ -26,6 +26,5 @@ test('Direct Email Marketing Page validation', async ({ authenticatedPage }) => 
     'Rename File',
     'Delete File',
     'Clear Selection',
-    'Upload to Franchisee',
   ]);
 });

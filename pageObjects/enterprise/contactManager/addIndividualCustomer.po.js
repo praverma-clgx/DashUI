@@ -52,9 +52,9 @@ class AddIndividualCustomerPage {
     const dropdown = this.page.locator(AddIndividualCustomerLocators.contactTypeDropdown);
     await dropdown.click();
     await this.page
-      .locator(AddIndividualCustomerLocators.contactTypeList, {
-        hasText: contactType,
-      })
+      .locator(AddIndividualCustomerLocators.contactTypeList)
+      .filter({ hasText: new RegExp(`^${contactType}$`) })
+      .first()
       .click();
   }
 

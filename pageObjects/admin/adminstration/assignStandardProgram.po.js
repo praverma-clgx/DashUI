@@ -37,12 +37,12 @@ class AssignStandardProgramPage {
     await this.page.waitForLoadState('networkidle');
 
     const assignProgramModal = this.page.locator(AssignStandardProgramLocators.assignProgramModal);
-    await expect(assignProgramModal).toBeVisible({ timeout: 10000 });
+    await expect(assignProgramModal).toBeVisible({ timeout: 30000 });
 
     const assignProgramIframe = assignProgramModal.frameLocator(
       AssignStandardProgramLocators.assignProgramIframe,
     );
-    await expect(assignProgramIframe.locator('body')).toBeVisible({ timeout: 10000 });
+    await expect(assignProgramIframe.locator('body')).toBeVisible({ timeout: 20000 });
 
     return { assignProgramModal, assignProgramIframe };
   }

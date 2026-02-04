@@ -190,10 +190,15 @@ class EnterpriseJobCostingPage {
       await paidToLoadingIndicator.waitFor({ state: 'hidden', timeout: 10000 });
     }
 
-    // Wait for dropdown list and click third option
+    // Wait for dropdown list - items may be hidden but still interactable
     const paidToDropdownList = this.page.locator(EnterpriseJobCostingLocators.paidToDropdownList);
-    await paidToDropdownList.nth(2).waitFor({ state: 'visible', timeout: 10000 });
-    await paidToDropdownList.nth(2).click();
+
+    // Wait for items to be attached (not necessarily visible)
+    await paidToDropdownList.first().waitFor({ state: 'attached', timeout: 10000 });
+
+    // Click the second option (skip the first placeholder/select option)
+    const secondOption = paidToDropdownList.nth(1);
+    await secondOption.evaluate((element) => element.click());
   }
 
   /**

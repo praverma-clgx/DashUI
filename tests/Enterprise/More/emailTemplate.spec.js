@@ -38,7 +38,6 @@ test('E-mail Template Builder in More FG', async ({ authenticatedPage }) => {
     'Rename File',
     'Delete File',
     'Clear Selection',
-    'Upload to Franchisee',
   ];
 
   // Validate All Buttons

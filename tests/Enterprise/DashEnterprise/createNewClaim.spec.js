@@ -1,11 +1,10 @@
-import { test, expect } from '../../../fixtures/enterpriseFixtures.js';
+﻿import { test, expect } from '../../../fixtures/enterpriseFixtures.js';
 import { CreateClaimPage } from '../../../pageObjects/enterprise/dashEnterprise/createNewClaim.po.js';
 import claimDetails from '../../../testData/enterprise/enterpriseClaimData.json' with { type: 'json' };
 import { isProduction } from '../../../utils/testTags.js';
 
 const { claimDetails: createNewClaimDetails } = claimDetails;
 
-// Skip this test in production environment
 test.skip(isProduction(), 'Skipping create claim test in production environment');
 
 test('Create New Claim', async ({ authenticatedPage }) => {
@@ -13,41 +12,36 @@ test('Create New Claim', async ({ authenticatedPage }) => {
   const createClaimPage = new CreateClaimPage(page);
 
   const referredBy = await createClaimPage.createNewClaimWithReferredBy(createNewClaimDetails);
-  // console.log(`Referred By: ${referredBy}`);
 
-  // // Assert the value in the UI matches the selected value
-  // await createClaimPage.getReferredByValue(referredBy);
+  await page.waitForLoadState('networkidle');
 
-  // const yearBuiltLocator = page.locator(
-  //   '#CustomerInformationPanel .innerDiv50pct:has(.innerDiv20pct:text("Year Built")) .innerDiv30pct',
-  // );
-  // await expect(yearBuiltLocator).toHaveText(createNewClaimDetails.yearBuilt);
+  // Check if we're on the Job Slideboard page (after claim creation)
+  const currentUrl = page.url();
+  console.log(`Current URL: ${currentUrl}`);
 
-  // // View More Locator
-  // const viewMoreLocator = page.locator('#ctl00_ContentPlaceHolder1_PhoneNo');
-  // await expect(viewMoreLocator).toBeVisible();
-  // await viewMoreLocator.click();
-  // await page.waitForLoadState('networkidle');
+  // Look for Referred By on the Job Slideboard page
+  const referredByLocator = page.locator(
+    '#ctl00_ContentPlaceHolder1_dockClaimInformation_C .parantDiv:has-text("Referred By") .innerDiv30pct.fontBold',
+  );
+  await expect(referredByLocator).toBeVisible({ timeout: 15000 });
+  const displayedReferredBy = await referredByLocator.innerText();
 
-  // const modalHeader = page.locator('.rwTitlebar em:has-text("Phone Numbers")');
-  // await expect(modalHeader).toBeVisible({ timeout: 5000 });
+  // Clean up the displayed text by removing extra whitespace and newlines
+  const cleanDisplayedReferredBy = displayedReferredBy?.replace(/\s+/g, ' ').trim();
 
-  // const iframePhoneNumbers = page.frameLocator('iframe[name="RadWindow_Common"]');
-  // const iframeElement = page.locator('iframe[name="RadWindow_Common"]');
-  // await expect(iframeElement).toBeVisible({ timeout: 5000 });
-  // await expect(iframeElement).toBeAttached();
+  // Assert the displayed value matches the selected value
+  expect(cleanDisplayedReferredBy).toBe(referredBy.trim());
+  console.log(`Displayed Referred By: "${cleanDisplayedReferredBy}"`);
+  console.log(`Expected Referred By: "${referredBy.trim()}"`);
 
-  // // Assert "Others 1:" label is visible
-  // const othersLabel = iframePhoneNumbers.locator(
-  //   'span.black-seoge-12-bold_new:has-text("Others  1:")',
-  // );
-  // await expect(othersLabel).toBeVisible({ timeout: 5000 });
+  const yearBuiltLocator = page.locator(
+    '#ctl00_ContentPlaceHolder1_dockCustomerInformation_C .innerDiv50pct:has(.innerDiv20pct:text("Year Built")) .innerDiv30pct',
+  );
+  await expect(yearBuiltLocator).toBeVisible({ timeout: 10000 });
+  await expect(yearBuiltLocator).toContainText(createNewClaimDetails.yearBuilt);
 
-  // // Assert phone number data is visible
-  // const phoneData = iframePhoneNumbers.locator(
-  //   `span.Blue_text_l2:has-text("${createNewClaimDetails.othersPhone}")`,
-  // );
-  // await expect(phoneData).toBeVisible({ timeout: 5000 });
-
-  // CLick on close button
+  // Check if phone number section exists on Job page
+  const phoneLocator = page.locator('#ctl00_ContentPlaceHolder1_PhoneNo');
+  const phoneExists = (await phoneLocator.count()) > 0;
+  expect(phoneExists).toBeTruthy();
 });
