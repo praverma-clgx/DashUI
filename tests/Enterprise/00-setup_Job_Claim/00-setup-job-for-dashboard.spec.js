@@ -1,14 +1,11 @@
 import { test } from '../../../fixtures/enterpriseFixtures.js';
 import { CreateJobCloseJobPage } from '../../../pageObjects/enterprise/closeAndDeleteJobAndClaim/createJobCloseJob.po.js';
 import createJobData from '../../../testData/enterprise/enterpriseJobData.json' with { type: 'json' };
-import { saveJobNumberForCompanySettings } from '../../../utils/enterpriseJobGenerator.js';
+import { saveJobNumber } from '../../../utils/enterpriseJobGenerator.js';
 
 const { newJobData } = createJobData;
 
-// Configure this test file to run in serial mode - setup runs first before all other tests
-test.describe.configure({ mode: 'serial' });
-
-test('Setup - Create Job for Company Settings Tests', async ({ authenticatedPage }) => {
+test('Setup - Create Job for DashboardEvans Tests', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const createJobPage = new CreateJobCloseJobPage(page);
 
@@ -22,6 +19,11 @@ test('Setup - Create Job for Company Settings Tests', async ({ authenticatedPage
     newJobData.customerFirstName,
     newJobData.customerLastName,
   );
+
+  // Generate a unique job name
+  const uniqueJobName = `${newJobData.jobName}${Math.floor(Math.random() * 100000)}`;
+
+  await createJobPage.createUniqueJobName(uniqueJobName);
   await createJobPage.checkSameAsCustomerAddress(
     newJobData.customerFirstName,
     newJobData.customerLastName,
@@ -36,6 +38,11 @@ test('Setup - Create Job for Company Settings Tests', async ({ authenticatedPage
   const customerFullName = `${newJobData.customerLastName.toUpperCase()}, ${newJobData.customerFirstName.toUpperCase()}`;
   const jobNumberWithName = `${jobNumber}; ${customerFullName}`;
 
-  // Save job number to all Company Settings JSON files
-  saveJobNumberForCompanySettings(jobNumber, jobNumberWithName);
+  // Save job number and customer name to JSON files for other tests to use
+  saveJobNumber(
+    jobNumber,
+    jobNumberWithName,
+    'testData/enterprise/enterpriseCompanySettings/DashboardAccountingNotes.json',
+    uniqueJobName,
+  );
 });

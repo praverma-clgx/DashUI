@@ -98,8 +98,19 @@ export default defineConfig({
       },
     },
     {
+      name: 'enterprise-setup',
+      testMatch: '**/Enterprise/00-setup_Job_Claim/**/*.spec.js',
+      fullyParallel: false, // Run tests one by one
+      retries: 2, // Retry failed tests twice
+      use: {
+        storageState: '.auth/enterprise.json',
+      },
+    },
+    {
       name: 'enterprise-chromium',
       testMatch: '**/Enterprise/**/*.spec.js',
+      testIgnore: '**/Enterprise/00-setup_Job_Claim/**/*.spec.js',
+      dependencies: ['enterprise-setup'],
       use: {
         storageState: '.auth/enterprise.json',
       },
