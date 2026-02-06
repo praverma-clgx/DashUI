@@ -48,9 +48,9 @@ class ComplianceTaskTabPage {
   async assertGridHeaders(headers) {
     for (const headerText of headers) {
       const headerLocator = this.page.locator(ComplianceTaskTabLocators.gridHeader, {
-        hasText: headerText,
-      });
-      await expect(headerLocator).toBeVisible();
+        hasText: new RegExp(`^${headerText}$`), // Exact match only
+      }).filter({ visible: true });
+      await expect(headerLocator).toBeVisible({ timeout: 10000 });
     }
   }
 

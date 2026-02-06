@@ -32,9 +32,9 @@ class FeedbackTabPage {
   async assertGridHeaders(headers) {
     for (const headerText of headers) {
       const headerLocator = this.page.locator(FeedbackTabLocators.gridHeader, {
-        hasText: headerText,
+        hasText: new RegExp(`^${headerText}$`), // Exact match only
       });
-      await expect(headerLocator).toBeVisible();
+      await expect(headerLocator).toBeVisible({ timeout: 10000 });
     }
   }
 }

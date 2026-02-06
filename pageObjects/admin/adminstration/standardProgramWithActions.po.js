@@ -116,27 +116,16 @@ class StandardProgramWithActionsPage {
   }
 
   async selectAllStatesForRequirement(addRequirementModalIframe, country = 'USA') {
-    const appliesToStateEditLocator = addRequirementModalIframe.locator(
-      '#RadGrid_States_ctl00 tr.rgRow',
-      {
-        has: addRequirementModalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
-      },
-    );
-    await expect(appliesToStateEditLocator).toBeVisible({ timeout: 10000 });
-    await appliesToStateEditLocator.click();
+    // Find the row containing the country label (matches both rgRow and rgAltRow classes)
+    const countryRow = addRequirementModalIframe.locator('#RadGrid_States_ctl00 tr.rgRow, #RadGrid_States_ctl00 tr.rgAltRow', {
+      has: addRequirementModalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
+    });
+    await expect(countryRow).toBeVisible({ timeout: 10000 });
 
-    const editButton = appliesToStateEditLocator.locator('input[type="submit"][value="Edit"]');
+    // Find and click the Edit button within that row
+    const editButton = countryRow.locator('input[type="submit"][value="Edit"]');
     await expect(editButton).toBeVisible({ timeout: 10000 });
     await editButton.click();
-
-    //     const countryRow = addRequirementModalIframe.locator('#RadGrid_States_ctl00 tr.rgRow', {
-    //   has: addRequirementModalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
-    // });
-    // await expect(countryRow).toBeVisible({ timeout: 10000 });
-
-    // const editButton = countryRow.locator('input[type="submit"][value="Edit"]');
-    // await expect(editButton).toBeVisible({ timeout: 10000 });
-    // await editButton.click();
 
     // Wait for the modal to be visible instead of networkidle
     const selectStateModalReq = addRequirementModalIframe.locator(

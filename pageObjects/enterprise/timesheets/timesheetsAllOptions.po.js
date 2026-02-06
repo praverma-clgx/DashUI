@@ -179,7 +179,7 @@ export class TimesheetsAllOptionsPage {
     await this.timesheetsMenuHover.hover();
     await this.usageReportMenuItem.waitFor({ state: 'visible', timeout: 5000 });
     await this.usageReportMenuItem.click();
-    await this.getUsageReportButton.waitFor({ state: 'visible', timeout: 20000 });
+    await this.getUsageReportButton.waitFor({ state: 'visible', timeout: 10000 });
   }
 
   async validateGetUsageReportButton() {

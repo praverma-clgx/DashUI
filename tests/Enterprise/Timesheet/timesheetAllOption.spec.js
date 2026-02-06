@@ -74,9 +74,11 @@ test('Timesheets All Options Page validation', async ({ authenticatedPage }) => 
   // Navigate to Usage Report and validate
   await timesheetsPage.navigateToUsageReport();
   await timesheetsPage.validateGetUsageReportButton();
-  await timesheetsPage.validateExportToExcelButton();
 
   // Validate Usage Report Grid Headers
   const usageReportGridColumnHeaders = ['Name', 'TotalCount'];
   await timesheetsPage.validateUsageReportGridHeaders(usageReportGridColumnHeaders);
+
+  await timesheetsPage.validateExportToExcelButton();
+
 });

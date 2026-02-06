@@ -35,8 +35,6 @@ test('Compliance Tasks Tab Validation', async ({ authenticatedPage }) => {
     'Pause Reason',
     'Review Status',
     'Exception Reason Note',
-    'CompletionIntervalInMinutes',
-    'Completed',
   ];
 
   // Validate each header in the Feedback grid

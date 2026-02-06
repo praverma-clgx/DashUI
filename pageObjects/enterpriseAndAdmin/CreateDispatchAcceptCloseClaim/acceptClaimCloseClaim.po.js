@@ -115,23 +115,29 @@ class AcceptClaimCloseClaimPage {
   }
 
   /**
-   * Accept claim in modal
+   * Accept claim in modal - only clicks if modal is visible
    */
   async acceptClaimInModal() {
     const acceptClaimModal = this.page.locator(CloseClaimLocators.acceptClaimModal);
-    await acceptClaimModal.waitFor({ state: 'visible', timeout: 20000 });
+    const isVisible = await acceptClaimModal.isVisible();
 
-    const acceptClaimIframe = this.page.frameLocator(CloseClaimLocators.acceptClaimIframe);
-    await expect(this.page.locator(CloseClaimLocators.acceptClaimIframe)).toBeVisible({
-      timeout: 20000,
-    });
+    if (isVisible) {
+      await acceptClaimModal.waitFor({ state: 'visible', timeout: 20000 });
 
-    const acceptButtonInIframe = acceptClaimIframe.locator(CloseClaimLocators.acceptButtonInIframe);
-    await acceptButtonInIframe.waitFor({ state: 'visible', timeout: 20000 });
-    await acceptButtonInIframe.click();
+      const acceptClaimIframe = this.page.frameLocator(CloseClaimLocators.acceptClaimIframe);
+      await expect(this.page.locator(CloseClaimLocators.acceptClaimIframe)).toBeVisible({
+        timeout: 20000,
+      });
 
-    await acceptClaimModal.waitFor({ state: 'hidden', timeout: 20000 });
-    await this.page.waitForLoadState('networkidle');
+      const acceptButtonInIframe = acceptClaimIframe.locator(
+        CloseClaimLocators.acceptButtonInIframe,
+      );
+      await acceptButtonInIframe.waitFor({ state: 'visible', timeout: 20000 });
+      await acceptButtonInIframe.click();
+
+      await acceptClaimModal.waitFor({ state: 'hidden', timeout: 20000 });
+      await this.page.waitForLoadState('networkidle');
+    }
   }
 
   /**

@@ -113,7 +113,7 @@ class CreateClaimPage {
   }
 
   /**
-   * Select reported by - Random selection from first 10 options
+   * Select reported by - Selects second option from dropdown
    */
   async selectReportedBy() {
     await this.page.locator(CreateClaimLocators.reportedByDropdownArrow).click();
@@ -122,13 +122,8 @@ class CreateClaimPage {
     const dropdownOptions = this.page.locator(CreateClaimLocators.reportedByDropdownList);
     await dropdownOptions.first().waitFor({ state: 'visible', timeout: 10000 });
 
-    // Get count of available options (max 10)
-    const optionsCount = await dropdownOptions.count();
-    const maxOptions = Math.min(optionsCount, 10);
-
-    // Select random option from 0 to maxOptions-1
-    const randomIndex = Math.floor(Math.random() * maxOptions);
-    await dropdownOptions.nth(randomIndex).click();
+    // Select second option (index 1)
+    await dropdownOptions.nth(1).click();
   }
 
   /**
@@ -284,7 +279,7 @@ class CreateClaimPage {
       })
       .first();
 
-    await expect(providerOption).toBeVisible({ timeout: 30000 });
+    await expect(providerOption).toBeVisible({ timeout: 60000 });
     await providerOption.click();
     await this.page.waitForLoadState('networkidle');
   }

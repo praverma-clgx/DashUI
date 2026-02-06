@@ -2,6 +2,10 @@ import { test, expect } from '../../../fixtures/enterpriseFixtures.js';
 import { CreateClaimPage } from '../../../pageObjects/enterprise/dashEnterprise/createNewClaim.po.js';
 import AddNewDivisionToClaimPage from '../../../pageObjects/enterprise/addNewJob/addNewDivisionToClaim.po.js';
 import claimDetails from '../../../testData/enterprise/enterpriseClaimData.json' with { type: 'json' };
+import { isProduction } from '../../../utils/testTags.js';
+
+test.skip(isProduction(), 'Skipping create claim test in production environment');
+
 
 const { claimDetails: createNewClaimDetails } = claimDetails;
 

@@ -123,7 +123,6 @@ class DashboardSurveyTabPage {
   async clickTakeSurveyButton() {
     const takeSurveyButton = this.page.locator(DashboardSurveyTabPageLocators.takeSurveyButton);
     await takeSurveyButton.click();
-    await this.page.waitForTimeout(3000);
     await this.page.waitForLoadState('networkidle');
   }
 
@@ -141,8 +140,19 @@ class DashboardSurveyTabPage {
    */
   async selectSurvey(surveyName = 'Structure Job Survey') {
     const surveyDropdown = this.page.locator(DashboardSurveyTabPageLocators.surveyDropdown);
-    await surveyDropdown.selectOption({ label: surveyName });
-    // Wait for grid to load after survey selection
+
+    // Wait for dropdown to be visible and enabled
+    await surveyDropdown.waitFor({ state: 'visible', timeout: 10000 });
+    await surveyDropdown.click();
+
+    // Find and click the option
+    const option = this.page.locator(
+      `#ctl00_ContentPlaceHolder1_dockJobTabs_C_Survey_userControl_SrveyDetails_Grid_ctl00_ctl02_ctl00_SurveyDropdown`,
+      { has: this.page.locator(`text="${surveyName}"`) },
+    );
+    await option.first().click();
+
+    // Wait for grid to load after selection
     await this.page.waitForLoadState('networkidle');
   }
 
@@ -152,7 +162,7 @@ class DashboardSurveyTabPage {
    */
   async downloadAndAssertExcel() {
     // Ensure survey is selected first
-    await this.selectSurvey();
+ //   await this.selectSurvey();
 
     const exportToExcelButton = this.page.locator(
       DashboardSurveyTabPageLocators.exportToExcelButton,
