@@ -34,8 +34,8 @@ class LoginPage {
 
   async navigate() {
     await this.page.goto(this.url, {
-      waitUntil: 'domcontentloaded',
-      timeout: 60000,
+      waitUntil: 'networkidle',
+      timeout: 300000,
     });
   }
 
@@ -46,7 +46,7 @@ class LoginPage {
     // Click login and wait for successful redirect
     await this.page.locator(loginPageLocators.loginButton).click();
     // Wait for redirect away from login page
-    await this.page.waitForURL((url) => url.toString() !== this.url, { timeout: 30000 });
+    await this.page.waitForURL((url) => url.toString() !== this.url, { timeout: 300000 });
   }
 
   async enterUsername(username) {

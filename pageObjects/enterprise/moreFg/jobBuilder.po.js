@@ -34,7 +34,7 @@ export class JobBuilderPage {
 
   async navigateToJobBuilder() {
     await this.moreMenuHover.hover();
-    await this.jobBuilderMenuItem.waitFor({ state: 'visible', timeout: 5000 });
+    await this.jobBuilderMenuItem.waitFor({ state: 'visible', timeout: 15000 });
     await this.jobBuilderMenuItem.click();
     await this.page.waitForLoadState('networkidle');
   }

@@ -6,7 +6,7 @@ import { saveJobNumberForCompanySettings } from '../../../utils/enterpriseJobGen
 
 const { newJobData } = createJobData;
 
-test('Setup - Create Job for Enterprise', async ({ authenticatedPage }) => {
+test('@smoke, Setup - Create Job for Enterprise', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const createJobPage = new CreateJobCloseJobPage(page);
 
@@ -48,5 +48,5 @@ test('Setup - Create Job for Enterprise', async ({ authenticatedPage }) => {
   );
 
   // Save job number to all Company Settings JSON files
-    saveJobNumberForCompanySettings(jobNumber, jobNumberWithName);
+  saveJobNumberForCompanySettings(jobNumber, jobNumberWithName);
 });

@@ -12,6 +12,12 @@ export const AddIndividualCustomerLocators = {
   address: '#ctl00_ContentPlaceHolder1_txtAddress',
   zipCodeInput: '#ctl00_ContentPlaceHolder1_ctl07_ZipCodeTextBox',
   city: '#ctl00_ContentPlaceHolder1_ctl07_CityTextBox',
+  individualCells: 'tbody[role="rowgroup"] td[data-field="PersonName"]',
+  companyAddBtn: '#ctl00_ContentPlaceHolder1_imgAddNew',
+  addNewCompanyPopup: '#ctl00_ContentPlaceHolder1_MPECompNewPH_foregroundElement',
+  vipCompanySwitch: '.modalPopup #ctl00_ContentPlaceHolder1_RadSwitch_VIPCompanyCustomer',
+  cancelCompanyBtn: '.modalPopup #ctl00_ContentPlaceHolder1_btnCompClosePH',
+  individualGrid: '#individualGrid td[data-field="PersonName"]',
 };
 
 class AddIndividualCustomerPage {
@@ -74,6 +80,41 @@ class AddIndividualCustomerPage {
     await this.page.waitForLoadState('networkidle');
   }
 
+  async clickCompanyAddButton() {
+    const btn = this.page.locator(AddIndividualCustomerLocators.companyAddBtn);
+    await btn.waitFor({ state: 'visible', timeout: 10000 });
+    await btn.click();
+  }
+
+  async assertAddNewCompanyPopupVisible() {
+    await this.page
+      .locator(AddIndividualCustomerLocators.addNewCompanyPopup)
+      .waitFor({ state: 'visible', timeout: 10000 });
+  }
+
+  async assertVIPCompanyButtonOff() {
+    const vipBtn = this.page.locator(AddIndividualCustomerLocators.vipCompanySwitch);
+    await vipBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await expect(vipBtn).toHaveClass(/k-switch-off/);
+  }
+
+  async clickCancelAddNewCompany() {
+    const cancelBtn = this.page.locator(AddIndividualCustomerLocators.cancelCompanyBtn);
+    await cancelBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await cancelBtn.click();
+    await this.page
+      .locator(AddIndividualCustomerLocators.addNewCompanyPopup)
+      .waitFor({ state: 'hidden', timeout: 10000 });
+  }
+
+  async clickIndividualByName(name) {
+    const cell = this.page
+      .locator(AddIndividualCustomerLocators.individualGrid, { hasText: name })
+      .first();
+    await cell.locator('a').click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
   // ==================== Assertion Methods ====================
   async assertFirstName(expected) {
     await expect(this.page.locator(AddIndividualCustomerLocators.firstNameInput)).toHaveValue(
@@ -103,6 +144,54 @@ class AddIndividualCustomerPage {
 
   async assertSavedUrl() {
     await expect(this.page).toHaveURL(/ContactManager\.aspx\?Active=Individual\d+/);
+  }
+
+  async clickVipButton() {
+    const vipIndividualSwitch = this.page.locator(
+      'button[name="ctl00$ContentPlaceHolder1$RadSwitch_VIPIndividualCustomer"]',
+    );
+    await vipIndividualSwitch.click();
+  }
+
+  async enableVIPfilter() {
+    await this.page.waitForLoadState('networkidle');
+    const vipFilterSwitch = this.page.locator(
+      'button[name="ctl00$ContentPlaceHolder1$RadSwitch_VIP"]',
+    );
+    await vipFilterSwitch.waitFor({ state: 'visible', timeout: 30000 });
+    await vipFilterSwitch.click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  async filterByFirstName(firstName) {
+    const firstNameFilterInput = this.page.locator(
+      'input[data-role="autocomplete"][aria-label="Name"]',
+    );
+    await firstNameFilterInput.waitFor({ state: 'visible', timeout: 30000 });
+    await firstNameFilterInput.fill(firstName);
+    await firstNameFilterInput.press('Enter');
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  async assertIndividualRowCount(expectedCount) {
+    const individualCells = this.page.locator(AddIndividualCustomerLocators.individualCells);
+    if (expectedCount === 0) {
+      await this.page.waitForLoadState('networkidle');
+      await expect(individualCells).toHaveCount(0);
+    } else {
+      await individualCells.first().waitFor({ state: 'visible', timeout: 15000 });
+      await expect(individualCells).toHaveCount(expectedCount);
+    }
+  }
+
+  async disableVIPfilter() {
+    await this.page.waitForLoadState('networkidle');
+    const vipFilterSwitch = this.page.locator(
+      'button[name="ctl00$ContentPlaceHolder1$RadSwitch_VIP"]',
+    );
+    await vipFilterSwitch.waitFor({ state: 'visible', timeout: 30000 });
+    await vipFilterSwitch.click();
+    await this.page.waitForLoadState('networkidle');
   }
 }
 

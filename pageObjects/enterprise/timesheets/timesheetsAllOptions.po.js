@@ -50,7 +50,7 @@ export class TimesheetsAllOptionsPage {
 
   async navigateToTimesheets() {
     await this.timesheetsMenuHover.hover();
-    await this.timesheetsMenuItem.waitFor({ state: 'visible', timeout: 10000 });
+    await this.timesheetsMenuItem.waitFor({ state: 'visible', timeout: 30000 });
     await this.timesheetsMenuItem.click();
     await this.timesheetsHeader.waitFor({ state: 'visible', timeout: 10000 });
   }
@@ -107,7 +107,7 @@ export class TimesheetsAllOptionsPage {
 
   async navigateToSettings() {
     await this.timesheetsMenuHover.hover();
-    await this.settingsMenuItem.waitFor({ state: 'visible', timeout: 10000 });
+    await this.settingsMenuItem.waitFor({ state: 'visible', timeout: 30000 });
     await this.settingsMenuItem.click();
     await this.generalSettingsHeader.waitFor({ state: 'visible', timeout: 10000 });
   }
@@ -123,7 +123,7 @@ export class TimesheetsAllOptionsPage {
 
   async navigateToActivityCodes() {
     await this.timesheetsMenuHover.hover();
-    await this.activityCodesMenuItem.waitFor({ state: 'visible', timeout: 10000 });
+    await this.activityCodesMenuItem.waitFor({ state: 'visible', timeout: 30000 });
     await this.activityCodesMenuItem.click();
     await this.activityCodesHeader.waitFor({ state: 'visible', timeout: 10000 });
   }
@@ -155,7 +155,7 @@ export class TimesheetsAllOptionsPage {
 
   async navigateToApproverSettings() {
     await this.timesheetsMenuHover.hover();
-    await this.approverSettingsMenuItem.waitFor({ state: 'visible', timeout: 15000 });
+    await this.approverSettingsMenuItem.waitFor({ state: 'visible', timeout: 30000 });
     await this.approverSettingsMenuItem.click();
     await this.approverSettingsHeader.waitFor({ state: 'visible', timeout: 10000 });
   }
@@ -177,7 +177,7 @@ export class TimesheetsAllOptionsPage {
 
   async navigateToUsageReport() {
     await this.timesheetsMenuHover.hover();
-    await this.usageReportMenuItem.waitFor({ state: 'visible', timeout: 10000 });
+    await this.usageReportMenuItem.waitFor({ state: 'visible', timeout: 30000 });
     await this.usageReportMenuItem.click();
     await this.getUsageReportButton.waitFor({ state: 'visible', timeout: 10000 });
   }

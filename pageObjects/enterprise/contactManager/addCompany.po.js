@@ -10,6 +10,9 @@ export const AddCompanyLocators = {
   saveAndBackBtn: '#ctl00_ContentPlaceHolder1_btnSaveAndBack',
   companyNameFilter: 'input[data-role="autocomplete"][aria-label="Company Name"]',
   companyCells: 'tbody[role="rowgroup"] td[data-field="Company"]',
+  companyGrid: '#companyGrid td[data-field="Company"]',
+  vipCompanySwitch: 'button[name="ctl00$ContentPlaceHolder1$RadSwitch_VIPCompanyCustomer"]',
+  vipFilterSwitch: 'button[name="ctl00$ContentPlaceHolder1$RadSwitch_VIP"]',
 };
 
 export default class AddCompanyPage {
@@ -75,13 +78,51 @@ export default class AddCompanyPage {
   // Step 10: Assert filtered company row count
   async assertCompanyRowCount(expectedCount) {
     const companyCells = this.page.locator(AddCompanyLocators.companyCells);
-    await companyCells.first().waitFor({ state: 'visible', timeout: 5000 });
-    await expect(companyCells).toHaveCount(expectedCount);
+    if (expectedCount === 0) {
+      await this.page.waitForLoadState('networkidle');
+      await expect(companyCells).toHaveCount(0);
+    } else {
+      await companyCells.first().waitFor({ state: 'visible', timeout: 15000 });
+      await expect(companyCells).toHaveCount(expectedCount);
+    }
   }
 
   // Helper: Get company row count for logging
   async getCompanyRowCount() {
     const companyCells = this.page.locator(AddCompanyLocators.companyCells);
     return await companyCells.count();
+  }
+
+  // Select VIP button
+  async selectVIPButton() {
+    await this.page.locator(AddCompanyLocators.vipCompanySwitch).click();
+  }
+
+  // Assert VIP switch is off
+  async assertVIPSwitchOff() {
+    const vipSwitch = this.page.locator(AddCompanyLocators.vipCompanySwitch);
+    await vipSwitch.waitFor({ state: 'visible', timeout: 30000 });
+    await expect(vipSwitch).toHaveClass(/k-switch-off/);
+  }
+
+  // Click company row by name
+  async clickCompanyByName(companyName) {
+    const cell = this.page
+      .locator(AddCompanyLocators.companyGrid, { hasText: companyName })
+      .first();
+    await cell.locator('a').click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Enable VIP filter
+  async enableVIPfilter() {
+    await this.page.locator(AddCompanyLocators.vipFilterSwitch).click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Disable VIP filter
+  async disableVIPfilter() {
+    await this.page.locator(AddCompanyLocators.vipFilterSwitch).click();
+    await this.page.waitForLoadState('networkidle');
   }
 }

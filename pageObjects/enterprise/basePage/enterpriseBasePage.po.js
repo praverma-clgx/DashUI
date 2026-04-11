@@ -94,9 +94,9 @@ export class BasePage {
    */
   async removeOverlays() {
     await removeWalkMeOverlays(this.page);
-  //  * Robust wait for ASP.NET AJAX / Telerik Postbacks to complete.
-  //  * This is essential for grids and dropdowns that update without a full page reload.
-  //  */
+    //  * Robust wait for ASP.NET AJAX / Telerik Postbacks to complete.
+    //  * This is essential for grids and dropdowns that update without a full page reload.
+    //  */
   }
   async waitForAjax() {
     // 1. Wait for standard network idle (no active HTTP requests)
@@ -128,4 +128,3 @@ export class BasePage {
     await this.page.waitForFunction(() => document.readyState === 'complete').catch(() => {});
   }
 }
-

@@ -1,11 +1,12 @@
 import { test, expect } from '../../../fixtures/enterpriseFixtures.js';
 import createJobData from '../../../testData/enterprise/enterpriseJobData.json' with { type: 'json' };
 import AddIndividualCustomerPage from '../../../pageObjects/enterprise/contactManager/addIndividualCustomer.po.js';
-import addIndividualCustomerData from '../../../testData/enterprise/enterpriseContactManager/addIndividualCustomer.json' with { type: 'json' };
 
 const { newJobData } = createJobData;
 
-test('Check Customer Present in Contact Manager, if not create a Customer for Job and Claim', async ({ authenticatedPage }) => {
+test('@smoke, Check Customer Present in Contact Manager, if not create a Customer for Job and Claim', async ({
+  authenticatedPage,
+}) => {
   const page = authenticatedPage;
   const addIndividualCustomerPage = new AddIndividualCustomerPage(page);
 
@@ -27,12 +28,13 @@ test('Check Customer Present in Contact Manager, if not create a Customer for Jo
   // Collect all names in the grid for debugging and matching
   let allNames = [];
   for (let i = 0; i < rowCount; i++) {
-    const name = (await gridRows.nth(i).locator('td[data-field="PersonName"] a').textContent())?.trim() || '';
+    const name =
+      (await gridRows.nth(i).locator('td[data-field="PersonName"] a').textContent())?.trim() || '';
     allNames.push(name);
   }
 
   // Check if any row matches the expected customer name
-  const found = allNames.some(name => name && name.includes(newJobData.customerName));
+  const found = allNames.some((name) => name && name.includes(newJobData.customerName));
   if (found) {
     expect(true).toBe(true); // Customer found, test passes
     await page.close(); // Close the page/browser
@@ -51,12 +53,12 @@ test('Check Customer Present in Contact Manager, if not create a Customer for Jo
   await addIndividualCustomerPage.assertLastName(newJobData.customerLastName);
 
   // Select contact type and verify
-  await addIndividualCustomerPage.selectContactTypeCustomer(addIndividualCustomerData.contactType);
-  await addIndividualCustomerPage.assertContactType(addIndividualCustomerData.contactType);
+  await addIndividualCustomerPage.selectContactTypeCustomer(newJobData.contactType);
+  await addIndividualCustomerPage.assertContactType(newJobData.contactType);
 
   // Enter phone number and verify
-  await addIndividualCustomerPage.enterPhone(addIndividualCustomerData.mainPhone);
-  await addIndividualCustomerPage.assertPhone(addIndividualCustomerData.mainPhone);
+  await addIndividualCustomerPage.enterPhone(newJobData.mainPhone);
+  await addIndividualCustomerPage.assertPhone(newJobData.mainPhone);
 
   // Enter address and zip, then verify city (city is auto-filled based on zip code)
   await addIndividualCustomerPage.enterAddress(newJobData.address);

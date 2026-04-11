@@ -11,7 +11,7 @@ const { claimDetails: createNewClaimDetails } = claimDetails;
 test.skip(isProduction(), 'Skip in production');
 
 // Create a new claim and persist its job number
-test('Create Claim Enterprise', async ({ authenticatedPage }) => {
+test('Create Claim and Close Claim', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const closeClaimPage = new CreateClaimCloseClaimPage(page);
   const createClaimPage = new CreateClaimPage(page);

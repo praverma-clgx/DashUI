@@ -15,9 +15,9 @@ class CreateLeadJobPage {
   }
 
   /**
-   * Navigate to Accounts Receivable Tracking from Dashboards menu
+   * Navigate to Create Lead/Job (Legacy) from Dashboards menu
    */
-  async navigateToAccountsReceivableTracking() {
+  async navigateTocreateLeadJobLegacy() {
     await this.page.locator(createLeadJobPageLocators.dashboardsMenu).first().hover();
 
     const createLeadJobOption = this.page.getByText('Create Lead/Job (Legacy)', {

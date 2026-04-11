@@ -22,7 +22,7 @@ export class ProgramCenterPage {
     await this.moreMenuHover.hover();
     await this.programCenterMenuItem.waitFor({
       state: 'visible',
-      timeout: 5000,
+      timeout: 15000,
     });
     await this.programCenterMenuItem.click();
     await this.page.waitForLoadState('networkidle');

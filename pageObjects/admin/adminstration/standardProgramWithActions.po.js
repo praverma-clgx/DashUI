@@ -117,9 +117,12 @@ class StandardProgramWithActionsPage {
 
   async selectAllStatesForRequirement(addRequirementModalIframe, country = 'USA') {
     // Find the row containing the country label (matches both rgRow and rgAltRow classes)
-    const countryRow = addRequirementModalIframe.locator('#RadGrid_States_ctl00 tr.rgRow, #RadGrid_States_ctl00 tr.rgAltRow', {
-      has: addRequirementModalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
-    });
+    const countryRow = addRequirementModalIframe.locator(
+      '#RadGrid_States_ctl00 tr.rgRow, #RadGrid_States_ctl00 tr.rgAltRow',
+      {
+        has: addRequirementModalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
+      },
+    );
     await expect(countryRow).toBeVisible({ timeout: 10000 });
 
     // Find and click the Edit button within that row

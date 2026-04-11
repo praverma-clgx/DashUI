@@ -48,4 +48,16 @@ test('Compliance Tasks Tab Validation', async ({ authenticatedPage }) => {
 
   // Assert refresh button is visible
   await complianceTaskTabPage.assertRefreshButton();
+
+  // Assert Reassign button is visible
+  await complianceTaskTabPage.assertReassignButton();
+
+  // Assert Pending status indicator is visible
+  await complianceTaskTabPage.assertPendingLabel();
+
+  // Assert Warning status indicator is visible
+  await complianceTaskTabPage.assertWarningLabel();
+
+  // Assert Overdue status indicator is visible
+  await complianceTaskTabPage.assertOverdueLabel();
 });

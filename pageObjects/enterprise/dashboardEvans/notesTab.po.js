@@ -415,7 +415,7 @@ class DashboardNotesTabPage {
 
     // Wait for button to be visible
     await cancelButton.waitFor({ state: 'visible', timeout: 10000 });
-    
+
     // Scroll the button into view within the iframe and click with force
     await cancelButton.scrollIntoViewIfNeeded();
     await cancelButton.click({ force: true });

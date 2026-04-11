@@ -8,8 +8,8 @@ test('Error Page Validation', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const createLeadJobPageInstance = new CreateLeadJobPage(page);
 
-  // Navigate to Accounts Receivable Tracking page
-  await createLeadJobPageInstance.navigateToAccountsReceivableTracking();
+  // Navigate to Create Lead/Job (Legacy) page
+  await createLeadJobPageInstance.navigateTocreateLeadJobLegacy();
 
   // Assert Error Message is visible
   await createLeadJobPageInstance.assertErrorMessageVisible();

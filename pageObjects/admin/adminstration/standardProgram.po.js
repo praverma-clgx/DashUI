@@ -177,9 +177,12 @@ class StandardProgramPage {
 
   async selectAllStates(modalIframe, country = 'USA') {
     // Find the row containing the country span and click its Edit button
-    const countryRow = modalIframe.locator('#RadGrid_States_ctl00 tr.rgRow, #RadGrid_States_ctl00 tr.rgAltRow', {
-      has: modalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
-    });
+    const countryRow = modalIframe.locator(
+      '#RadGrid_States_ctl00 tr.rgRow, #RadGrid_States_ctl00 tr.rgAltRow',
+      {
+        has: modalIframe.locator(`span[id*="Label_Country"]:has-text("${country}")`),
+      },
+    );
     await expect(countryRow).toBeVisible({ timeout: 10000 });
 
     const editButton = countryRow.locator('input[type="submit"][value="Edit"]');

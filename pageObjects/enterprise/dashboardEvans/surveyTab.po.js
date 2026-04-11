@@ -162,7 +162,7 @@ class DashboardSurveyTabPage {
    */
   async downloadAndAssertExcel() {
     // Ensure survey is selected first
- //   await this.selectSurvey();
+    //   await this.selectSurvey();
 
     const exportToExcelButton = this.page.locator(
       DashboardSurveyTabPageLocators.exportToExcelButton,

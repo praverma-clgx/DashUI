@@ -1,16 +1,35 @@
 import { test, expect } from '../../../fixtures/enterpriseFixtures.js';
 import { CreateJobCloseJobPage } from '../../../pageObjects/enterprise/closeAndDeleteJobAndClaim/createJobCloseJob.po.js';
+import JobSettingPage from '../../../pageObjects/enterprise/administrationFG/jobSetting.po.js';
 import createJobData from '../../../testData/enterprise/enterpriseJobData.json' with { type: 'json' };
+import { getRandomNumber } from '../../../utils/randomNumber.js';
 const { newJobData } = createJobData;
 
-test('Create Job Enterprise and Close it', async ({ authenticatedPage }) => {
+test('Create Job Enterprise and Close it, Create New Reason for Closing', async ({
+  authenticatedPage,
+}) => {
   const page = authenticatedPage;
   const createJobPage = new CreateJobCloseJobPage(page);
+  const jobSettingPage = new JobSettingPage(page);
+  const uniqueReasonForClosing = `Automate${getRandomNumber(1, 9999)}`;
 
-  // Navigate to Create Job
+  // --- SETUP: Navigate to Job Settings and add a unique Reason for Closing ---
+  await jobSettingPage.navigateToJobSettings();
+  await expect(await jobSettingPage.verifyReasonForClosingHeaderVisible()).toBeVisible();
+  await jobSettingPage.clickReasonForClosingSection();
+  await jobSettingPage.verifyReasonForClosingLabelVisible();
+  await jobSettingPage.clickAddNewReasonForClosingRecord();
+  await jobSettingPage.addNewReasonForClosingEntry(uniqueReasonForClosing);
+
+  // --- FILTER: Apply "Contains" filter and assert exactly 1 row exists ---
+  await jobSettingPage.filterReasonForClosingByContains(uniqueReasonForClosing);
+  const rowCount = await jobSettingPage.getFilteredReasonForClosingRowCount(uniqueReasonForClosing);
+  expect(rowCount).toBe(1);
+
+  await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+
+  // --- CREATE JOB ---
   await createJobPage.clickCreateJobButton();
-
-  // Fill Job Form
   await createJobPage.selectRandomLossCategoryExceptFirst();
   await createJobPage.selectCustomer(
     newJobData.customerName,
@@ -23,52 +42,35 @@ test('Create Job Enterprise and Close it', async ({ authenticatedPage }) => {
   );
   await createJobPage.checkWaterMitigation();
   await createJobPage.fillLossDescription(newJobData.lossDescription);
-
-  // Click on Save and Go to Job Slideboard
   await createJobPage.clickSaveBtnAndGoToSlideBoard();
-
-  // Reject all compliance tasks
   await createJobPage.rejectAllComplianceTasks();
 
-  await page.waitForLoadState('networkidle');
-  
-    // Click on Edit Job information
-    const jobInformationEdit = page.locator('#img_EditDivision');
-    await jobInformationEdit.waitFor({ state: 'visible' });
-    await jobInformationEdit.click();
-  
-    // Assert the Edit Job Information modal is present
-    const modalTitle = page.locator('.rwTitlebar em', { hasText: 'Edit Job Information' });
-    await expect(modalTitle).toBeVisible({ timeout: 10000 });
-    // Assert the modal wrapper is visible
-    const modalWrapper = page.locator('#RadWindowWrapper_ctl00_ContentPlaceHolder1_RadWindow_Common');
-    await expect(modalWrapper).toBeVisible({ timeout: 10000 });
-  
-    // Assert the iframe inside the modal is visible
-    const modalIframe = page.locator('iframe[name="RadWindow_Common"]');
-    await expect(modalIframe).toBeVisible({ timeout: 10000 });
-  
-    // Interact with the iframe using frameLocator
-    const frame = page.frameLocator('iframe[name="RadWindow_Common"]');
-    const customCodeDropdownArrow = frame.locator('#comboBoxEnvironmentalCode_Arrow');
-    await expect(customCodeDropdownArrow).toBeVisible({ timeout: 10000 });
-    await customCodeDropdownArrow.click();
+  await page.waitForLoadState('domcontentloaded');
 
-    // Select the second option from the dropdown list
-    const dropdownList = frame.locator('#comboBoxEnvironmentalCode_DropDown ul.rcbList > li.rcbItem');
-    await expect(dropdownList.nth(1)).toBeVisible({ timeout: 10000 });
-    await dropdownList.nth(1).click();
+  // --- EDIT JOB INFORMATION ---
+  await createJobPage.openEditJobInfoAndSelectEnvironmentalCode();
 
-    // Click the Save button in the iframe
-    const saveButton = frame.locator('#button_Save_input');
-    await expect(saveButton).toBeVisible({ timeout: 10000 });
-    await saveButton.click();
-  
-    await page.waitForLoadState('networkidle');
-
-  // Close the job
-  await createJobPage.closeJob();
-
-  // Verify job is closed
+  // --- CLOSE JOB ---
+  await createJobPage.closeJob(uniqueReasonForClosing);
   await createJobPage.verifyJobIsClosed();
+
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+
+  // --- CLEANUP: Navigate back, filter again, assert, delete, assert ---
+  await jobSettingPage.navigateToJobSettings();
+  await expect(await jobSettingPage.verifyReasonForClosingHeaderVisible()).toBeVisible();
+  await jobSettingPage.clickReasonForClosingSection();
+  await jobSettingPage.verifyReasonForClosingLabelVisible();
+  await jobSettingPage.filterReasonForClosingByContains(uniqueReasonForClosing);
+
+  const refreshedRowCount =
+    await jobSettingPage.getFilteredReasonForClosingRowCount(uniqueReasonForClosing);
+  expect(refreshedRowCount).toBe(1);
+
+  await jobSettingPage.deleteReasonForClosing(uniqueReasonForClosing);
+
+  const postDeleteCount =
+    await jobSettingPage.getFilteredReasonForClosingRowCount(uniqueReasonForClosing);
+  expect(postDeleteCount).toBe(0);
 });

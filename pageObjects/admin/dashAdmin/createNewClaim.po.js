@@ -215,8 +215,8 @@ class CreateClaimPage {
     await dropdownOptions.first().waitFor({ state: 'visible', timeout: 15000 });
 
     // Select matching option - trim text to handle trailing spaces
-    const lossTypeOption = dropdownOptions.filter({ 
-      has: this.page.locator('text=/^\\s*Water\\s*$/')
+    const lossTypeOption = dropdownOptions.filter({
+      has: this.page.locator('text=/^\\s*Water\\s*$/'),
     });
     await lossTypeOption.first().click();
   }
@@ -303,26 +303,9 @@ class CreateClaimPage {
     const button = this.page.locator(CreateClaimLocators.saveAndGoToSlideboardButton);
     await button.waitFor({ state: 'visible', timeout: 15000 });
     await expect(button).toBeEnabled();
-    // Retry click up to 3 times if needed
-    let clicked = false;
-    for (let i = 0; i < 3; i++) {
-      try {
-        await button.click({ trial: false, timeout: 5000 });
-        // Wait for page to load
-        await this.page.waitForLoadState('networkidle', { timeout: 10000 });
-        clicked = true;
-        break;
-      } catch (e) {
-        console.log(`Click attempt ${i + 1} failed:`, e.message);
-        if (i === 2) throw e;
-        await this.page.waitForTimeout(1000);
-      }
-    }
-    if (clicked) {
-      console.log('Clicked Save and Go to Slideboard button');
-    } else {
-      throw new Error('Failed to click Save and Go to Slideboard button after retries');
-    }
+    await button.click();
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 });
+    await expect(this.page).toHaveURL(/jJobSlideBoard\.aspx/i, { timeout: 30000 });
   }
 
   /**

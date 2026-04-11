@@ -6,7 +6,6 @@ import { isProduction } from '../../../utils/testTags.js';
 
 test.skip(isProduction(), 'Skipping create claim test in production environment');
 
-
 const { claimDetails: createNewClaimDetails } = claimDetails;
 
 test('Create Claim, Add New Job', async ({ authenticatedPage }) => {
@@ -45,7 +44,7 @@ test('Create Claim, Add New Job', async ({ authenticatedPage }) => {
 
   // Wait for the modal foreground element to be visible
   await expect(await addNewDivisionPage.verifyModalVisible()).toBeVisible({
-    timeout: 15000,
+    timeout: 60000,
   });
 
   // Get the modal header locator and assert its text

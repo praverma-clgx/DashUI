@@ -3,12 +3,14 @@ import AddCompanyPage from '../../../pageObjects/enterprise/contactManager/addCo
 import { getRandomNumber } from '../../../utils/randomNumber.js';
 import addCompanyData from '../../../testData/enterprise/enterpriseContactManager/AddCompanyData.json' with { type: 'json' };
 
-test('Verify add new company functionality', async ({ authenticatedPage }) => {
+test('Verify "Add New Company" functionality for VIP and Non-VIP for company', async ({
+  authenticatedPage,
+}) => {
   const page = authenticatedPage;
   const addCompanyPage = new AddCompanyPage(page);
 
   // Generate unique company name
-  const uniqueCompanyName = `Cmp${getRandomNumber(1, 10000)}`;
+  const uniqueCompanyName = `ST_${getRandomNumber(1, 10000)}`;
 
   // Step 1: Click on Contact Manager
   await addCompanyPage.clickContactManager();
@@ -33,6 +35,48 @@ test('Verify add new company functionality', async ({ authenticatedPage }) => {
 
   // Step 8: Click Save and Back to Contact Manager
   await addCompanyPage.clickSaveAndBack();
+
+  // Click on VIP switch to filter vip companies only on grid
+  await addCompanyPage.enableVIPfilter();
+
+  // Filter by Company Name again after clicking VIP switch
+  await addCompanyPage.filterByCompanyName(uniqueCompanyName);
+
+  // Assert filtered company row count after clicking VIP switch
+  await addCompanyPage.assertCompanyRowCount(0);
+
+  // Disable VIP filter to see all companies
+  await addCompanyPage.disableVIPfilter();
+
+  // Step 9: Filter by Company Name
+  await addCompanyPage.filterByCompanyName(uniqueCompanyName);
+
+  // Step 10: Assert filtered company row count
+  await addCompanyPage.assertCompanyRowCount(1);
+
+  // Click the company row by name
+  await addCompanyPage.clickCompanyByName(uniqueCompanyName);
+
+  // Assert VIP button is switched off
+  await addCompanyPage.assertVIPSwitchOff();
+
+  // Select VIP button
+  await addCompanyPage.selectVIPButton();
+
+  // Step 8: Click Save and Back to Contact Manager
+  await addCompanyPage.clickSaveAndBack();
+
+  // Click on VIP switch to filter vip companies only on grid
+  await addCompanyPage.enableVIPfilter();
+
+  // Filter by Company Name again after clicking VIP switch
+  await addCompanyPage.filterByCompanyName(uniqueCompanyName);
+
+  // Assert filtered company row count after clicking VIP switch
+  await addCompanyPage.assertCompanyRowCount(1);
+
+  // Disable VIP filter to see all companies
+  await addCompanyPage.disableVIPfilter();
 
   // Step 9: Filter by Company Name
   await addCompanyPage.filterByCompanyName(uniqueCompanyName);

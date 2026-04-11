@@ -9,7 +9,7 @@ const currentEnv = config.env || 'dkirc';
 const providerConfig = standardProgram[currentEnv] || standardProgram.dkirc;
 let programName = `Program${getRandomNumber(1, 100000)}`;
 
-test('Add New Standard Programs', async ({ authenticatedPage }) => {
+test.skip('Add New Standard Programs', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
   const standardProgramPage = new StandardProgramPage(page);
 

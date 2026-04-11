@@ -38,12 +38,12 @@ export class MarketingNotesPage extends BasePage {
     await this._waitForModalToOpen();
   }
 
-async clickAddCompanyRecord() {
-  await this.clickCompanyNotesTab();
-  await this.page.waitForLoadState('networkidle');
-  await this.addCompanyNoteBtn.click();
-  await this._waitForModalToOpen();
-}
+  async clickAddCompanyRecord() {
+    await this.clickCompanyNotesTab();
+    await this.page.waitForLoadState('networkidle');
+    await this.addCompanyNoteBtn.click();
+    await this._waitForModalToOpen();
+  }
 
   // Helper to prevent code duplication
   async _waitForModalToOpen() {

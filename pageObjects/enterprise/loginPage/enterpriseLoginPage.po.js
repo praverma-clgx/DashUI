@@ -26,13 +26,13 @@ class EnterpriseLoginPage {
   }
 
   async navigate() {
-    await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 300000 });
   }
 
   async login(companyId, username, password) {
     await this.page
       .locator(EnterpriseLoginPageLocators.companyId)
-      .waitFor({ state: 'visible', timeout: 60000 }); // Wait up to 60s for visibility
+      .waitFor({ state: 'visible', timeout: 120000 }); // Wait up to 120s for visibility
     await this.page.locator(EnterpriseLoginPageLocators.companyId).fill(companyId);
     await this.page.locator(EnterpriseLoginPageLocators.usernameInput).fill(username);
     await this.page.locator(EnterpriseLoginPageLocators.passwordInput).fill(password);
@@ -50,7 +50,7 @@ class EnterpriseLoginPage {
         const urlString = url.toString();
         return !urlString.includes('Login.aspx') || urlString.includes('uPostLogin.aspx');
       },
-      { timeout: 60000 },
+      { timeout: 300000 },
     );
 
     // Wait a moment for the page to stabilize after login

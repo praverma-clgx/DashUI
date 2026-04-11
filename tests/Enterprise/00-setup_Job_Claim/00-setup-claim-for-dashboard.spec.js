@@ -11,7 +11,7 @@ const { claimDetails: createNewClaimDetails } = claimDetails;
 test.skip(isProduction(), 'Skip in production');
 
 // Setup test - Create a claim for dashboard tests
-test('Setup - Create Claim for Dashboard Tests', async ({ authenticatedPage }) => {
+test('@smoke, Setup - Create Claim for Dashboard Tests', async ({ authenticatedPage }) => {
   const page = authenticatedPage;
 
   // Create a new claim

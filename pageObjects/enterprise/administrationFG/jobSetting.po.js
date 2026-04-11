@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 /**
  * @typedef {Object} JobSettingLocatorsType
  * @property {string} administrationMenu
@@ -32,6 +34,8 @@ const JobSettingLocators = {
   workOrderMasterHeader: '.sectionHeaderText',
   addNewDivisionRecordButton:
     '#ctl00_ContentPlaceHolder1_gvDivision_ctl00_ctl02_ctl00_InitInsertButton',
+  addNewReasonForClosingRecordButton:
+    '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl00_InitInsertButton',
   divisionGridHeader: '#ctl00_ContentPlaceHolder1_gvDivision_ctl00_Header a',
   firstEditButton: '#ctl00_ContentPlaceHolder1_gvDivision_ctl00__0 a:has-text("Edit")',
   divisionNameLabel: 'td',
@@ -210,6 +214,113 @@ class JobSettingPage {
   async clickCancelButton() {
     const cancelButton = this.page.locator(JobSettingLocators.cancelButton);
     await cancelButton.click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Click on Reason for Closing section icon
+  async clickReasonForClosingSection() {
+    const reasonForClosingHeader = this.page.locator(JobSettingLocators.reasonForClosingHeader, {
+      hasText: 'Reason for Closing',
+    });
+    await reasonForClosingHeader.click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Click on Add New Record button in Reason for Closing grid
+  async clickAddNewReasonForClosingRecord() {
+    const addNewButton = this.page.locator(JobSettingLocators.addNewReasonForClosingRecordButton);
+    await addNewButton.waitFor({ state: 'visible', timeout: 15000 });
+    await addNewButton.click();
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Verify "Reason for Closing" label is visible and has correct text
+  async verifyReasonForClosingLabelVisible() {
+    const label = this.page.locator('#ctl00_ContentPlaceHolder1_lbReason');
+    await expect(label).toBeVisible({ timeout: 10000 });
+    await expect(label).toHaveText('Reason for Closing');
+  }
+
+  // Fill and save a new Reason for Closing entry
+  async addNewReasonForClosingEntry(uniqueReasonForClosing) {
+    const reasonInput = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl04_txtReason',
+    );
+    await expect(reasonInput).toBeVisible({ timeout: 10000 });
+    await reasonInput.fill(uniqueReasonForClosing);
+
+    const categoryDropdown = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl04_RadComboBox_Category_Arrow',
+    );
+    await expect(categoryDropdown).toBeVisible({ timeout: 10000 });
+    await categoryDropdown.click();
+
+    const categoryOption = this.page
+      .locator(
+        '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl04_RadComboBox_Category_DropDown ul.rcbList > li',
+      )
+      .filter({ hasText: 'Job Closed Internally', exact: true });
+    await expect(categoryOption).toBeVisible({ timeout: 10000 });
+    await categoryOption.click();
+
+    const isActiveCheckbox = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl04_IsActive',
+    );
+    await expect(isActiveCheckbox).toBeVisible({ timeout: 10000 });
+    await isActiveCheckbox.check();
+
+    const saveButton = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl04_btnUpdate',
+    );
+    await expect(saveButton).toBeVisible({ timeout: 10000 });
+    await saveButton.click();
+    await this.page.waitForTimeout(10000);
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Filter the Reason for Closing grid using "Contains" filter
+  async filterReasonForClosingByContains(searchText) {
+    const filterInput = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl03_FilterTextBox_Reason',
+    );
+    await expect(filterInput).toBeVisible({ timeout: 10000 });
+    await filterInput.click();
+    await filterInput.fill(searchText);
+
+    const filterButton = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00_ctl02_ctl03_Filter_Reason',
+    );
+    await expect(filterButton).toBeVisible({ timeout: 10000 });
+    await filterButton.click();
+
+    const containsOption = this.page
+      .locator('#ctl00_ContentPlaceHolder1_gvReasonForClosing_rfltMenu_detached span.rmText')
+      .filter({ hasText: /^Contains$/ });
+    await expect(containsOption).toBeVisible({ timeout: 10000 });
+    await containsOption.click();
+    await this.page.waitForTimeout(2000);
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  // Get count of filtered rows matching the given text in the Reason for Closing grid
+  async getFilteredReasonForClosingRowCount(searchText) {
+    const rows = this.page
+      .locator('#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00 tbody tr td.rgSorted')
+      .filter({ hasText: searchText });
+    await this.page.waitForTimeout(5000);
+    return await rows.count();
+  }
+
+  // Delete the Reason for Closing row matching the given text and accept the confirm dialog
+  async deleteReasonForClosing(uniqueReasonForClosing) {
+    const targetRow = this.page
+      .locator('#ctl00_ContentPlaceHolder1_gvReasonForClosing_ctl00 tbody tr')
+      .filter({ has: this.page.locator('td.rgSorted', { hasText: uniqueReasonForClosing }) });
+    const deleteButton = targetRow.first().locator('input[title="Delete"]');
+    await expect(deleteButton).toBeVisible({ timeout: 10000 });
+    this.page.once('dialog', (dialog) => dialog.accept());
+    await deleteButton.click();
+    await this.page.waitForTimeout(5000);
     await this.page.waitForLoadState('networkidle');
   }
 }

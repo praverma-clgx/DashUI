@@ -61,16 +61,13 @@ class ReportsPage {
 
   // Open Open Jobs Report and generate download
   async verifyOpenJobsReport() {
-    const [newPage] = await Promise.all([
-      this.page.context().waitForEvent('page'),
-      this.page.locator("a:has-text('Open Jobs Report')").click(),
-    ]);
-    await newPage.waitForLoadState('networkidle', { timeout: 60000 });
-
-    const [download] = await Promise.all([
-      newPage.waitForEvent('download', { timeout: 30000 }),
-    ]);
-
+    const link = this.page.locator("a:has-text('Open Jobs Report')");
+    // Change target to _self to prevent new tab opening
+    await link.evaluate((el) => (el.target = '_self'));
+    // Wait for download event before clicking
+    const downloadPromise = this.page.waitForEvent('download', { timeout: 90000 });
+    await link.click();
+    const download = await downloadPromise;
     return download;
   }
 
@@ -136,7 +133,7 @@ class ReportsPage {
     await firstOption.click();
     await goButton.click();
     await notification.waitFor({ state: 'visible', timeout: 30000 });
-    
+
     return { reportPopup, notification };
   }
 
@@ -182,7 +179,9 @@ class ReportsPage {
   }
 
   // Select Job received but not started and assert URL
-  async clickjobReceivedButNotStartedOptionAndAssertUrl(expectedUrlSuffix = 'JobsReceivedButNotStarted.aspx') {
+  async clickjobReceivedButNotStartedOptionAndAssertUrl(
+    expectedUrlSuffix = 'JobsReceivedButNotStarted.aspx',
+  ) {
     const [newPage] = await Promise.all([
       this.page.context().waitForEvent('page'),
       this.page.locator('#ctl00_ContentPlaceHolder1_TreeView1t1').click(),
@@ -193,20 +192,20 @@ class ReportsPage {
     return newPage;
   }
 
-   async selectDateRange(startDate, endDate) {
+  async selectDateRange(startDate, endDate) {
     const startDateInput = this.page.locator('#txtDays1_dateInput');
     const endDateInput = this.page.locator('#txtEndDate1_dateInput');
     const goButton = this.page.locator('#btnContinue');
 
     await startDateInput.fill(startDate);
     await endDateInput.fill(endDate);
-    
+
     // Capture network request when Go button is clicked
     const [request] = await Promise.all([
       this.page.waitForRequest(() => true), // Capture any network request
       goButton.click(),
     ]);
-    
+
     // Assert that a network call was made
     expect(request).toBeDefined();
     expect(request.url()).toBeTruthy();

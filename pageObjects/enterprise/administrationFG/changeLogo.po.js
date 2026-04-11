@@ -55,7 +55,6 @@ class ChangeLogoPage {
       })
       .first()
       .click();
-    await this.page.waitForLoadState('networkidle');
     const changeLogoSection = this.page.locator(ChangeLogoLocators.changeLogoSection, {
       hasText: /^Change Logo$/,
     });

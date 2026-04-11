@@ -23,7 +23,7 @@ export class ClaimCenterPage {
 
   async navigateToClaimCenter() {
     await this.moreMenuHover.hover();
-    await this.claimCenterMenuItem.waitFor({ state: 'visible', timeout: 5000 });
+    await this.claimCenterMenuItem.waitFor({ state: 'visible', timeout: 15000 });
     await this.claimCenterMenuItem.click();
     await this.page.waitForLoadState('networkidle');
   }

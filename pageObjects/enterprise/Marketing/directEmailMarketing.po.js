@@ -71,7 +71,7 @@ class DirectEmailMarketingPage {
   async assertButtonRow(expectedButtons) {
     for (const labelText of expectedButtons) {
       const buttonLocator = this.page.getByRole('button', { name: labelText });
-      await buttonLocator.waitFor({ state: 'visible', timeout: 5000 });
+      await buttonLocator.waitFor({ state: 'visible', timeout: 15000 });
     }
   }
 }

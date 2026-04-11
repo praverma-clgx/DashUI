@@ -45,7 +45,7 @@ class DashboardEquipmentTabPage {
     const equipmentTab = this.page.locator(DashboardEquipmentTabLocators.equipmentTab, {
       hasText: 'Equipment',
     });
-    await equipmentTab.waitFor({ state: 'visible', timeout: 5000 });
+    await equipmentTab.waitFor({ state: 'visible', timeout: 15000 });
     await equipmentTab.click();
     await this.page.waitForTimeout(5000);
   }

@@ -643,17 +643,19 @@ export class JobSlideboardPage extends BasePage {
     await this.actionFilterTextBox.waitFor({ state: 'visible' });
     await this.actionFilterTextBox.fill(actionText);
     await this.actionFilterTextBox.press('Enter');
-    
+
     // Wait for navigation and grid update
     await this.page.waitForLoadState('networkidle', { timeout: 15000 }).catch((e) => {
       console.error('Network load timeout during filter:', e.message);
     });
-    
+
     // Verify we're not on error page
     if (this.page.url().includes('ErrorPage')) {
-      throw new Error(`Filtered by action "${actionText}" caused navigation to error page: ${this.page.url()}`);
+      throw new Error(
+        `Filtered by action "${actionText}" caused navigation to error page: ${this.page.url()}`,
+      );
     }
-    
+
     // Wait for grid to show filtered results
     await this.page.waitForTimeout(1000);
   }

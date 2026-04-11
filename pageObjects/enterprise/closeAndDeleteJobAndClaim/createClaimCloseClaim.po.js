@@ -46,7 +46,7 @@ export class CreateClaimCloseClaimPage {
 
   async rejectAllComplianceTasks() {
     // Wait for Select All checkbox to be visible
-    await this.selectAllCheckbox.waitFor({ state: 'visible', timeout: 15000 });
+    await this.selectAllCheckbox.waitFor({ state: 'visible', timeout: 60000 });
 
     // Click on Select All checkbox in compliance Tasks tab
     await this.selectAllCheckbox.click();

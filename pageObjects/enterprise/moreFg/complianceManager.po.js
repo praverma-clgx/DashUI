@@ -47,7 +47,7 @@ export class ComplianceManagerPage {
     await this.moreMenuHover.hover();
     await this.complianceManagerMenuItem.waitFor({
       state: 'visible',
-      timeout: 5000,
+      timeout: 15000,
     });
     await this.complianceManagerMenuItem.click();
     await this.page.waitForLoadState('networkidle');

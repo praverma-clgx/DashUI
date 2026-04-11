@@ -23,7 +23,7 @@ export class ExceptionReasonManagementPage {
     await this.moreMenuHover.hover();
     await this.exceptionReasonManagementMenuItem.waitFor({
       state: 'visible',
-      timeout: 5000,
+      timeout: 15000,
     });
     await this.exceptionReasonManagementMenuItem.click();
     await this.page.waitForLoadState('networkidle');

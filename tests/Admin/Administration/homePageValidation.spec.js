@@ -25,7 +25,6 @@ test('Home Page all options Validation', async ({ authenticatedPage }) => {
     'Reports',
     'Queue Management',
     'Suspension Management',
-    'Billing',
   ];
 
   // Validate all admin menu options

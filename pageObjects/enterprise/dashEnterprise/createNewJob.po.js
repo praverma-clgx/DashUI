@@ -19,7 +19,7 @@ class CreateNewJobPage {
    * Verify URL contains job identifier
    */
   async verifyJobURL() {
-    await expect(this.page).toHaveURL(/Job(Id|Number)/i, { timeout: 30000 });
+    await expect(this.page).toHaveURL(/Job(Id|Number)/i, { timeout: 60000 });
   }
 }
 

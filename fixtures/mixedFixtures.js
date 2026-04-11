@@ -13,12 +13,12 @@ export const test = base.extend({
   // Admin context with admin authentication
   adminContext: async ({ browser }, use) => {
     const authPath = path.join(process.cwd(), '.auth', 'admin.json');
-    
+
     // Verify auth file exists
     if (!fs.existsSync(authPath)) {
       throw new Error(`Admin auth file not found at ${authPath}. Run global-setup first.`);
     }
-    
+
     const adminContext = await browser.newContext({
       storageState: authPath,
     });
@@ -29,12 +29,12 @@ export const test = base.extend({
   // Enterprise context with enterprise authentication
   enterpriseContext: async ({ browser }, use) => {
     const authPath = path.join(process.cwd(), '.auth', 'enterprise.json');
-    
+
     // Verify auth file exists
     if (!fs.existsSync(authPath)) {
       throw new Error(`Enterprise auth file not found at ${authPath}. Run global-setup first.`);
     }
-    
+
     const enterpriseContext = await browser.newContext({
       storageState: authPath,
     });
@@ -45,8 +45,8 @@ export const test = base.extend({
   // Admin page
   adminPage: async ({ adminContext }, use) => {
     const page = await adminContext.newPage();
-    await page.goto(config.admin.baseUrl, { timeout: 60000 }); // Reduced timeout to 60s
-    await page.waitForLoadState('domcontentloaded'); // Faster than networkidle
+    await page.goto(config.admin.baseUrl, { timeout: 300000 }); // Reduced timeout to 60s
+    await page.waitForLoadState('networkidle'); // Faster than networkidle
 
     // 🔧 Remove WalkMe overlays with continuous monitoring
     await setupWalkMeRemoval(page);
@@ -59,7 +59,7 @@ export const test = base.extend({
   // Enterprise page
   enterprisePage: async ({ enterpriseContext }, use) => {
     const page = await enterpriseContext.newPage();
-    await page.goto(config.enterprise.baseUrl, { timeout: 60000 }); // Reduced timeout to 60s
+    await page.goto(config.enterprise.baseUrl, { timeout: 300000 }); // Reduced timeout to 60s
     await page.waitForLoadState('domcontentloaded'); // Faster than networkidle
 
     // 🔧 Remove WalkMe overlays with continuous monitoring

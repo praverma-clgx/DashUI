@@ -45,7 +45,7 @@ test('Survey Tab Validation', async ({ authenticatedPage }) => {
   const pdfDownloadSuccess = await surveyTabPage.downloadAndAssertPDF();
   expect(pdfDownloadSuccess).toBeTruthy();
 
-    // Click on Take a Survey button
+  // Click on Take a Survey button
   await surveyTabPage.clickTakeSurveyButton();
 
   // Validate Customer Service Survey Form title text is correct

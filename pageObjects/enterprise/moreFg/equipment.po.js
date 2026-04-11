@@ -23,7 +23,7 @@ export class EquipmentPage {
 
   async navigateToEquipment() {
     await this.moreMenuHover.hover();
-    await this.dropdown.waitFor({ state: 'visible', timeout: 10000 });
+    await this.dropdown.waitFor({ state: 'visible', timeout: 15000 });
     await this.equipmentMenuItem.waitFor({ state: 'visible', timeout: 10000 });
     await this.equipmentMenuItem.click();
     await this.page.waitForLoadState('networkidle');

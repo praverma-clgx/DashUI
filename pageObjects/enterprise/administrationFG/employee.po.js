@@ -420,7 +420,7 @@ class EmployeePage {
     const editLinks = gridTable.locator(EmployeeLocators.editLinks, {
       hasText: 'Edit',
     });
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState('networkidle');
     return await editLinks.count();
   }
 

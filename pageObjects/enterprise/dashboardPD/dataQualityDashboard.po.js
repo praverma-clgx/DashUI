@@ -2,7 +2,8 @@ import { expect } from '@playwright/test';
 
 const DataQualityDashboardLocators = {
   // Menu
-  dashboardsMenu: "span:has-text('Dashboards')",
+  dashboardsMenu: "a.rmRootLink:has(span.rmText:text-is('Dashboards'))",
+  dataQualityDashboardLink: "a.rmLink:has(span.rmText:text-is('Data Quality Dashboard'))",
 
   // Page Elements
   pageHeading: '#ctl00_ContentPlaceHolder1_DataQualityDashboardHeaderLabel',
@@ -21,16 +22,14 @@ class DataQualityDashboardPage {
    * Navigate to Data Quality Dashboard from Dashboards menu
    */
   async navigateToDataQualityDashboard() {
-    await this.page.locator(DataQualityDashboardLocators.dashboardsMenu).first().hover();
+    const dashboardsMenu = this.page.locator(DataQualityDashboardLocators.dashboardsMenu);
+    await dashboardsMenu.waitFor({ state: 'visible', timeout: 15000 });
+    await dashboardsMenu.hover();
 
-    const dataQualityDashboardOption = this.page.getByText('Data Quality Dashboard', {
-      exact: true,
-    });
-
-    await dataQualityDashboardOption.waitFor({
-      state: 'visible',
-      timeout: 5000,
-    });
+    const dataQualityDashboardOption = this.page.locator(
+      DataQualityDashboardLocators.dataQualityDashboardLink,
+    );
+    await dataQualityDashboardOption.waitFor({ state: 'visible', timeout: 15000 });
     await dataQualityDashboardOption.click();
     await this.page.waitForLoadState('networkidle');
   }

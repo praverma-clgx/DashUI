@@ -16,20 +16,7 @@ test('Data Quality Dashboard Page, Check When user is not authorized to view Gro
   await page.locator('div.card_33:has(.sectionHeaderText:has-text("Security"))').click();
   await page.waitForLoadState('networkidle');
 
-  await page
-    .locator('a#ctl00_ContentPlaceHolder1_tvAccessn114 img[alt="Expand Dashboards"]')
-    .click();
-  await page.waitForLoadState('domcontentloaded');
-
-  // Wait for the "Job Dashboard" expand icon to be visible
-  await page
-    .locator('a#ctl00_ContentPlaceHolder1_tvAccessn116 img[alt="Expand Job Dashboard"]')
-    .waitFor({ state: 'visible', timeout: 10000 });
-
-  // Click the "Job Dashboard" expand icon
-  await page
-    .locator('a#ctl00_ContentPlaceHolder1_tvAccessn116 img[alt="Expand Job Dashboard"]')
-    .click();
+  await page.locator('#ctl00_ContentPlaceHolder1_btnExpandAll').click();
   await page.waitForLoadState('domcontentloaded');
 
   // Gross Profit checkbox locator
@@ -42,6 +29,19 @@ test('Data Quality Dashboard Page, Check When user is not authorized to view Gro
   if (await grossProfitCheckbox.isChecked()) {
     await grossProfitCheckbox.uncheck();
   }
+
+  // Gross Profit (n247) checkbox - assert present and check it if unchecked
+  const grossProfitCheckbox247 = page.locator('#ctl00_ContentPlaceHolder1_tvAccessn247CheckBox');
+  await expect(grossProfitCheckbox247).toBeVisible();
+  if (!(await grossProfitCheckbox247.isChecked())) {
+    await grossProfitCheckbox247.check();
+  }
+  await expect(grossProfitCheckbox247).toBeChecked();
+
+  // Update button
+  const updateButton = page.locator('#ctl00_ContentPlaceHolder1_btnSave');
+  await updateButton.click();
+  await page.waitForLoadState('networkidle');
 
   // Navigate to Data Quality Dashboard page
   await dataQualityDashboardPage.navigateToDataQualityDashboard();

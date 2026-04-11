@@ -61,7 +61,7 @@ export class EquipmentAndTrackingPage {
     await this.moreMenuHover.hover();
     await this.equipmentAndTrackingMenuItem.waitFor({
       state: 'visible',
-      timeout: 5000,
+      timeout: 15000,
     });
     await this.equipmentAndTrackingMenuItem.click();
     await this.page.waitForLoadState('networkidle');

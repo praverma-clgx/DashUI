@@ -21,7 +21,8 @@ import { expect } from '@playwright/test';
 const requiredFieldForClosingLocators = {
   administrationMenu:
     '#ctl00_RadMenu1 .rmRootGroup > li.rmItem > a.rmLink.rmRootLink > span.rmText.rmExpandDown',
-  requiredFieldsForClosingOption: '#ctl00_RadMenu1 .rmSlide ul.rmGroup li.rmItem a.rmLink span.rmText',
+  requiredFieldsForClosingOption:
+    '#ctl00_RadMenu1 .rmSlide ul.rmGroup li.rmItem a.rmLink span.rmText',
   requiredFieldsForClosingHeading: 'span.Heading_blue_rftc',
   addNewRequiredFieldButton: 'input[value="Add New Required Field"].buttonCore.primaryButton',
   deleteSelectedButton: 'input[value="Delete Selected"].buttonCore.tertiaryButton',
@@ -43,9 +44,12 @@ class RequiredFieldForClosingPage {
     await this.page.waitForLoadState('networkidle');
 
     // Hover over the "Administration" top menu
-    const administrationMenu = this.page.locator(requiredFieldForClosingLocators.administrationMenu, {
-      hasText: 'Administration',
-    });
+    const administrationMenu = this.page.locator(
+      requiredFieldForClosingLocators.administrationMenu,
+      {
+        hasText: 'Administration',
+      },
+    );
     await administrationMenu.hover();
 
     // Select Required Fields For Closing Option in dropdown
@@ -65,7 +69,9 @@ class RequiredFieldForClosingPage {
    * Assert the Required Fields For Closing heading is visible
    */
   async assertRequiredFieldsForClosingHeading() {
-    const heading = this.page.locator(requiredFieldForClosingLocators.requiredFieldsForClosingHeading);
+    const heading = this.page.locator(
+      requiredFieldForClosingLocators.requiredFieldsForClosingHeading,
+    );
     await expect(heading).toBeVisible();
     await expect(heading).toHaveText('Required Fields For Closing');
   }
@@ -100,7 +106,9 @@ class RequiredFieldForClosingPage {
    * Assert the Add New Required Field modal header is visible
    */
   async assertAddNewRequiredFieldModalHeader() {
-    const header = this.page.locator(requiredFieldForClosingLocators.addNewRequiredFieldModalHeader);
+    const header = this.page.locator(
+      requiredFieldForClosingLocators.addNewRequiredFieldModalHeader,
+    );
     await expect(header).toBeVisible();
     await expect(header).toHaveText('Add New Required Field');
   }
@@ -121,7 +129,6 @@ class RequiredFieldForClosingPage {
     const button = this.page.locator(requiredFieldForClosingLocators.modalCloseButton);
     await button.click();
   }
- 
 }
 
 export default RequiredFieldForClosingPage;

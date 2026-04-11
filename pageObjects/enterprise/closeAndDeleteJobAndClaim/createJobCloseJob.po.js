@@ -23,6 +23,27 @@ export class CreateJobCloseJobPage {
     await jobName.fill(name);
   }
 
+  // Select Referred by
+  async selectReferredBy() {
+    const referredByDropdown = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_DropDown_ReferredBy',
+    );
+    await referredByDropdown.click();
+
+    // Wait for the dropdown panel to be visible
+    const dropdownPanel = this.page.locator(
+      '#ctl00_ContentPlaceHolder1_JobParentInformation_GenaralInfo_DropDown_ReferredBy_DropDown',
+    );
+    await expect(dropdownPanel).toBeVisible({ timeout: 20000 });
+
+    // Wait for at least two options to be visible
+    const options = dropdownPanel.locator('ul.rcbList > li.rcbItem');
+    await expect(options.nth(1)).toBeVisible({ timeout: 20000 });
+
+    // Click the second option (index 1)
+    await options.nth(1).click();
+  }
+
   // Select Loss Category by name
   async selectLossCategory(category) {
     const lossCategoryArrow = this.page.locator(
@@ -93,7 +114,8 @@ export class CreateJobCloseJobPage {
     const count = await dropdownOptions.count();
     let found = false;
     for (let i = 0; i < count; i++) {
-      const optionText = (await dropdownOptions.nth(i).textContent())?.replace(/\s+/g, '').toLowerCase() || '';
+      const optionText =
+        (await dropdownOptions.nth(i).textContent())?.replace(/\s+/g, '').toLowerCase() || '';
       if (optionText.includes(normalizedTarget)) {
         await dropdownOptions.nth(i).click();
         found = true;
@@ -328,8 +350,43 @@ export class CreateJobCloseJobPage {
     await expect(complianceTaskRows).toHaveCount(1, { timeout: 10000 });
   }
 
+  // Open Edit Job Information modal, select second environmental code option, and save
+  async openEditJobInfoAndSelectEnvironmentalCode() {
+    const jobInformationEdit = this.page.locator('#img_EditDivision');
+    await jobInformationEdit.waitFor({ state: 'visible', timeout: 30000 });
+    await jobInformationEdit.click();
+
+    const modalTitle = this.page.locator('.rwTitlebar em', { hasText: 'Edit Job Information' });
+    await expect(modalTitle).toBeVisible({ timeout: 10000 });
+
+    const modalWrapper = this.page.locator(
+      '#RadWindowWrapper_ctl00_ContentPlaceHolder1_RadWindow_Common',
+    );
+    await expect(modalWrapper).toBeVisible({ timeout: 10000 });
+
+    const modalIframe = this.page.locator('iframe[name="RadWindow_Common"]');
+    await expect(modalIframe).toBeVisible({ timeout: 10000 });
+
+    const frame = this.page.frameLocator('iframe[name="RadWindow_Common"]');
+    const customCodeDropdownArrow = frame.locator('#comboBoxEnvironmentalCode_Arrow');
+    await expect(customCodeDropdownArrow).toBeVisible({ timeout: 10000 });
+    await customCodeDropdownArrow.click();
+
+    const dropdownList = frame.locator(
+      '#comboBoxEnvironmentalCode_DropDown ul.rcbList > li.rcbItem',
+    );
+    await expect(dropdownList.nth(1)).toBeVisible({ timeout: 10000 });
+    await dropdownList.nth(1).click();
+
+    const saveButton = frame.locator('#button_Save_input');
+    await expect(saveButton).toBeVisible({ timeout: 10000 });
+    await saveButton.click();
+
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
   // Close Job
-  async closeJob() {
+  async closeJob(uniqueReasonForClosing) {
     await this.page.reload();
     await this.page.waitForLoadState('networkidle');
     const closeJobButton = this.page.locator(
@@ -348,12 +405,12 @@ export class CreateJobCloseJobPage {
     const confirmationHeader = modalWrapper.locator('em', {
       hasText: 'Confirmation',
     });
-    await expect(confirmationHeader).toBeVisible({ timeout: 10000 });
+    await expect(confirmationHeader).toBeVisible({ timeout: 30000 });
 
     // Wait for iframe
     const iframeSelector = 'iframe[name="RadWindow_Common"]';
     await expect(this.page.locator(iframeSelector)).toBeVisible({
-      timeout: 20000,
+      timeout: 30000,
     });
 
     // Get frame
@@ -365,7 +422,7 @@ export class CreateJobCloseJobPage {
     }
     expect(modalFrame).not.toBeNull();
 
-    // Select random Provider reason
+    // Select unique Reason for closing from dropdown in modal iframe
     const reasonDropdownArrow = modalFrame.locator('#ReasonForClosingRadComboBox_Arrow');
     await expect(reasonDropdownArrow).toBeVisible({ timeout: 10000 });
     await reasonDropdownArrow.click();
@@ -374,9 +431,11 @@ export class CreateJobCloseJobPage {
       '#ReasonForClosingRadComboBox_DropDown .rcbList .rcbItem',
     );
     await expect(reasonOptions.first()).toBeVisible({ timeout: 10000 });
-    const reasonOptionCount = await reasonOptions.count();
-    const randomReasonIndex = Math.floor(Math.random() * (reasonOptionCount - 1)) + 1;
-    await reasonOptions.nth(randomReasonIndex).click();
+    const automateOption = reasonOptions
+      .filter({ hasText: new RegExp(uniqueReasonForClosing, 'i') })
+      .first();
+    await expect(automateOption).toBeVisible({ timeout: 10000 });
+    await automateOption.click();
 
     // Click Close Job button in modal
     const modalCloseButton = modalFrame.locator(
@@ -386,7 +445,7 @@ export class CreateJobCloseJobPage {
     await modalCloseButton.click();
 
     // Wait for modal to close
-    await expect(modalWrapper).toBeHidden({ timeout: 10000 });
+    await expect(modalWrapper).toBeHidden({ timeout: 30000 });
   }
 
   // Verify job is closed

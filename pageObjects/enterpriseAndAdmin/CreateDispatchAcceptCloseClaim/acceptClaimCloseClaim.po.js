@@ -216,6 +216,7 @@ class AcceptClaimCloseClaimPage {
 
     const complianceTaskRows = this.page.locator(CloseClaimLocators.complianceTaskRows);
     await expect(complianceTaskRows).toHaveCount(1, { timeout: 10000 });
+    await this.page.waitForLoadState('networkidle');
     await this.page.reload();
     await this.page.waitForLoadState('networkidle');
   }
@@ -252,7 +253,7 @@ class AcceptClaimCloseClaimPage {
     const referredByDropdownList = editClaimIFrame.locator(
       CloseClaimLocators.referredByDropdownList,
     );
-    await referredByDropdownList.waitFor({ state: 'visible', timeout: 10000 });
+    await referredByDropdownList.waitFor({ state: 'visible', timeout: 30000 });
 
     const firstReferredByOption = referredByDropdownList.locator('li.rcbItem').first();
     await firstReferredByOption.waitFor({ state: 'visible', timeout: 10000 });
@@ -271,9 +272,15 @@ class AcceptClaimCloseClaimPage {
     );
     await reportedByDropdownList.waitFor({ state: 'visible', timeout: 10000 });
 
-    const firstReportedByOption = reportedByDropdownList.locator('li.rcbItem').first();
-    await firstReportedByOption.waitFor({ state: 'visible', timeout: 10000 });
-    await firstReportedByOption.click();
+    const reportedByItems = reportedByDropdownList.locator('li.rcbItem');
+    const reportedByCount = await reportedByItems.count();
+    if (reportedByCount > 1) {
+      const firstReportedByOption = reportedByItems.first();
+      await firstReportedByOption.waitFor({ state: 'visible', timeout: 10000 });
+      await firstReportedByOption.click();
+    } else {
+      await this.page.keyboard.press('Escape');
+    }
     await expect(reportedByDropdownList).toBeHidden({ timeout: 5000 });
 
     // Select Job size
