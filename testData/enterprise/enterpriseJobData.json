@@ -7,6 +7,10 @@
     "jobName": "JobName",
     "address": "1320 Old Georgia Rd",
     "zipCode": "29376",
-    "city": "Roebuck"
+    "city": "Roebuck",
+    "contactType": "Customer",
+    "mainPhone": "1-123-456-7890",
+    "companyName": "ABC-REPAIR",
+    "reasonForChange": "Testing Switch to Company"
   }
 }

@@ -2,13 +2,15 @@
   "claimDetails": {
     "dateOfLoss": "11/18/2025",
     "lossDescription": "Automated test claim loss description",
-    "fullName": "Automate, Enterprise",
+    "fullName": "Automate,Enterprise",
     "firstName": "Enterprise",
     "lastName": "Automate",
     "email": "AutomateEnterprise@example.com",
     "phone": "555-555-0101",
     "address": "123 Example Street",
     "yearBuilt": "2025",
-    "othersPhone": "1-111-111-1111"
+    "othersPhone": "1-111-111-1111",
+    "reasonForChange": "Testing Switch to Company",
+    "companyName": "ABC-REPAIR"
   }
 }
